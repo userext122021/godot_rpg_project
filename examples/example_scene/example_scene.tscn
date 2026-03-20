@@ -1,0 +1,42 @@
+[gd_scene load_steps=8 format=3 uid="uid://bh5jh50ap76ej"]
+
+[ext_resource type="PackedScene" uid="uid://djphclfgekh58" path="res://examples/example_scene/player.tscn" id="1_1kmlx"]
+[ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
+[ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://world_objects/entities/stats_data.gd" id="2_vx6j6"]
+
+[sub_resource type="Environment" id="Environment_r2bdb"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1kmlx"]
+size = Vector2(64, 64)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vx6j6"]
+size = Vector3(64, 1, 64)
+
+[sub_resource type="Resource" id="Resource_n2gaa"]
+script = ExtResource("2_vx6j6")
+hp = null
+stamina = null
+metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
+
+[node name="ExampleScene" type="Node3D"]
+script = ExtResource("1_n2gaa")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r2bdb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.50000006, 0.8660254, 0, -0.8660254, -0.50000006, 0, 15, 0)
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_1kmlx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_vx6j6")
+
+[node name="Player" parent="." instance=ExtResource("1_1kmlx")]
+stats_data = SubResource("Resource_n2gaa")
+
+[connection signal="state_changed" from="Player" to="." method="_on_player_state_changed"]
