@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PickableData" load_steps=2 format=3 uid="uid://bphbvx3aivcf7"]
 
-[ext_resource type="Script" uid="uid://cfm5bwss6j1sn" path="res://world_objects/pickable/pickable_data.gd" id="1_ghtsb"]
+[ext_resource type="Script" uid="uid://cfm5bwss6j1sn" path="res://game_objects/pickable/pickable_data.gd" id="1_ghtsb"]
 
 [resource]
 script = ExtResource("1_ghtsb")
