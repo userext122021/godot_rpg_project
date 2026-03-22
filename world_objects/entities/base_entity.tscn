@@ -21,3 +21,5 @@ shape = SubResource("CapsuleShape3D_v3bii")
 [node name="StatsControl" parent="." instance=ExtResource("2_mkgnr")]
 
 [node name="Pivot" type="Marker3D" parent="."]
+
+[connection signal="died" from="StatsControl" to="." method="_on_stats_control_died"]

@@ -2,6 +2,7 @@ extends CharacterBody3D
 class_name BaseEntity
 
 signal state_changed(new_state:State,old_state:State)
+signal entity_died(entity_name:String,entity_category:String)
 
 enum State {IDLE,WALK,RUN,JUMP,EXT}
 
@@ -66,9 +67,17 @@ func take_damage(damage:float):
 	stats.take_damage(damage)
 
 func attack():
-	
 	if weapon:
 		if weapon.can_attck():
 			print("DEBUG: attack")
 			is_attacking=true
 			weapon.attack()
+
+func die():
+	entity_died.emit(stats.data.entity_name,stats.data.entity_category)
+	queue_free()
+
+
+func _on_stats_control_died() -> void:
+	die()
+	pass # Replace with function body.

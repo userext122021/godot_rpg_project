@@ -11,8 +11,8 @@ class_name StatsData
 @export var tmp_stamina:float=0
 @export var regen_hp_per_second:float=1
 @export var regen_stamina_per_second:float=1
-@export var max_stamina:float=100
-@export var hp:float=max_hp
-@export var stamina:float=max_stamina
+@export var max_stamina:float=50
+@export var hp:float=100.0
+@export var stamina:float=50.0
 @export var state_timers:Dictionary={"poisoned":0,"radiation":0}
 @export var detection_radius:float=20

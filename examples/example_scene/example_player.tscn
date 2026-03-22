@@ -1,0 +1,25 @@
+[gd_scene load_steps=8 format=3 uid="uid://djphclfgekh58"]
+
+[ext_resource type="PackedScene" uid="uid://bka5xkdn0m6fa" path="res://world_objects/entities/player/player.tscn" id="1_pmdal"]
+[ext_resource type="Script" uid="uid://cs4l3r1tvm53j" path="res://examples/example_scene/example_player.gd" id="2_e3ugx"]
+[ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://world_objects/entities/stats_data.gd" id="3_e3ugx"]
+[ext_resource type="PackedScene" uid="uid://bihegv11tkr1n" path="res://world_objects/weapon/base_weapon.tscn" id="4_q21gh"]
+[ext_resource type="Script" uid="uid://dsyhdks3kftvo" path="res://world_objects/weapon/weapon_data.gd" id="5_bvjqf"]
+
+[sub_resource type="Resource" id="Resource_ouwa7"]
+script = ExtResource("3_e3ugx")
+metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
+
+[sub_resource type="Resource" id="Resource_byw34"]
+script = ExtResource("5_bvjqf")
+damage = 7.0
+metadata/_custom_type_script = "uid://dsyhdks3kftvo"
+
+[node name="ExamplePlayer" node_paths=PackedStringArray("weapon") instance=ExtResource("1_pmdal")]
+script = ExtResource("2_e3ugx")
+stats_data = SubResource("Resource_ouwa7")
+weapon = NodePath("BaseWeapon")
+
+[node name="BaseWeapon" parent="." index="7" instance=ExtResource("4_q21gh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+data = SubResource("Resource_byw34")

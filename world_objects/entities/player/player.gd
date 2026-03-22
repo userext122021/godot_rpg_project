@@ -29,11 +29,12 @@ func _unhandled_input(event):
 func check_interaction(delta):
 	if $InteractRay.is_colliding():
 		var i_body:Node3D=$InteractRay.get_collider()
-		if i_body.has_node("Interactable"):
-			var i:Interactable=i_body.get_node("Interactable")
-			interactable=i
-			$InteractRay/Label3D.text=i.interact_text
-			$InteractRay/Label3D.show()
+		if i_body:
+			if i_body.has_node("Interactable"):
+				var i:Interactable=i_body.get_node("Interactable")
+				interactable=i
+				$InteractRay/Label3D.text=i.interact_text
+				$InteractRay/Label3D.show()
 			
 	else:
 		interactable=null
@@ -51,8 +52,8 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += get_gravity().y * delta
 	
-	
-	check_interaction(delta)
+	if $InteractRay.is_colliding():
+		check_interaction(delta)
 	if Input.is_action_just_pressed("interact"):
 		interact()
 	if Input.is_action_just_pressed("show_inventory"):

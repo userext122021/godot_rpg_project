@@ -1,15 +1,24 @@
 extends Node
 class_name Inventory
 
+signal item_used(item_name:String)
+
 var items = {} # Формат: {"wood": 10.0}
 var recipes = {} # Формат: {"axe": RecipeData}
+var items_data={}
 
+	
 func add_item(item_name: String, amount: float):
 	if items.has(item_name):
 		items[item_name] += amount
 	else:
 		items[item_name] = amount
 
+func add_item_data(data:PickableData):
+	if items_data.has(data.pickable_name):
+		return
+	items_data[data.pickable_name]=data.duplicate()
+	
 func remove_item(item_name: String, amount: float):
 	if items.has(item_name):
 		items[item_name] -= amount
@@ -53,3 +62,13 @@ func craft(recipe_name: String):
 
 func add_recipe(recipe_name: String, recipe_data: RecipeData):
 	recipes[recipe_name] = recipe_data
+
+	
+func use_item(item_name:String):
+	if not has_item(item_name):
+		return
+	if items_data.has(item_name):
+		var data:PickableData=items_data[item_name]
+		if data.is_usable:
+			remove_item(item_name,1.0)
+			item_used.emit(item_name)

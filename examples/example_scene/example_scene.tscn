@@ -1,6 +1,5 @@
-[gd_scene load_steps=22 format=3 uid="uid://bh5jh50ap76ej"]
+[gd_scene load_steps=20 format=3 uid="uid://bh5jh50ap76ej"]
 
-[ext_resource type="PackedScene" uid="uid://djphclfgekh58" path="res://examples/example_scene/player.tscn" id="1_1kmlx"]
 [ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://world_objects/entities/stats_data.gd" id="2_vx6j6"]
 [ext_resource type="PackedScene" uid="uid://bu0dr0fcl6bph" path="res://world_objects/props/base_prop.tscn" id="4_3wino"]
@@ -10,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dsyhdks3kftvo" path="res://world_objects/weapon/weapon_data.gd" id="8_wh25s"]
 [ext_resource type="PackedScene" uid="uid://d1pyrlgd5n7j6" path="res://ui/ui.tscn" id="9_3j6rv"]
 [ext_resource type="PackedScene" uid="uid://dyj5ecitscci1" path="res://world_objects/pickable/base_pickable.tscn" id="10_5j028"]
+[ext_resource type="PackedScene" uid="uid://djphclfgekh58" path="res://examples/example_scene/example_player.tscn" id="11_kwhvy"]
 [ext_resource type="Script" uid="uid://cfm5bwss6j1sn" path="res://world_objects/pickable/pickable_data.gd" id="11_wvpry"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wh25s"]
@@ -27,23 +27,11 @@ size = Vector2(64, 64)
 [sub_resource type="BoxShape3D" id="BoxShape3D_vx6j6"]
 size = Vector3(64, 1, 64)
 
-[sub_resource type="Resource" id="Resource_bqblc"]
-script = ExtResource("2_vx6j6")
-entity_name = "player"
-entity_category = "player"
-hp = null
-stamina = null
-metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
-
-[sub_resource type="Resource" id="Resource_wh25s"]
-script = ExtResource("8_wh25s")
-metadata/_custom_type_script = "uid://dsyhdks3kftvo"
-
-[sub_resource type="Resource" id="Resource_k3qqm"]
+[sub_resource type="Resource" id="Resource_wvpry"]
 script = ExtResource("2_vx6j6")
 speed = 2.0
-hp = null
-stamina = null
+max_hp = 20.0
+hp = 20.0
 metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
 
 [sub_resource type="Resource" id="Resource_3j6rv"]
@@ -73,14 +61,6 @@ mesh = SubResource("PlaneMesh_1kmlx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_vx6j6")
 
-[node name="Player" parent="." node_paths=PackedStringArray("weapon") instance=ExtResource("1_1kmlx")]
-stats_data = SubResource("Resource_bqblc")
-weapon = NodePath("BaseWeapon")
-
-[node name="BaseWeapon" parent="Player" instance=ExtResource("7_bqblc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-data = SubResource("Resource_wh25s")
-
 [node name="BaseProp" parent="." instance=ExtResource("4_3wino")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
 
@@ -88,17 +68,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
 
 [node name="BaseEnemy" parent="." instance=ExtResource("6_k3qqm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
-stats_data = SubResource("Resource_k3qqm")
+stats_data = SubResource("Resource_wvpry")
 
 [node name="BaseWeapon" parent="BaseEnemy" instance=ExtResource("7_bqblc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 data = SubResource("Resource_3j6rv")
 
 [node name="Ui" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_3j6rv")]
-player = NodePath("../Player")
+player = NodePath("../ExamplePlayer")
 
 [node name="BasePickable" parent="." instance=ExtResource("10_5j028")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 data = SubResource("Resource_kwhvy")
 
-[connection signal="state_changed" from="Player" to="." method="_on_player_state_changed"]
+[node name="ExamplePlayer" parent="." instance=ExtResource("11_kwhvy")]
