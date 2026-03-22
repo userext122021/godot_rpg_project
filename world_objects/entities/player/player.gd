@@ -1,6 +1,9 @@
 extends BaseEntity
 class_name Player
 
+signal show_inventory
+signal interaction_started
+
 var mouse_sensitivity:float=0.002
 @onready var camera = $CameraPivot/Camera3D
 
@@ -11,6 +14,9 @@ func _ready():
 	super._ready()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Прячем курсор
 
+func get_inventory() -> Inventory:
+	return $Inventory
+	
 func _unhandled_input(event):
 	if Input.is_action_pressed("ui_cancel"):
 		get_tree().quit()
@@ -38,6 +44,7 @@ func interact():
 	if interactable==null:
 		return
 	interactable.interact(self)
+	interaction_started.emit()
 	
 func _physics_process(delta):
 	super._physics_process(delta)
@@ -48,6 +55,9 @@ func _physics_process(delta):
 	check_interaction(delta)
 	if Input.is_action_just_pressed("interact"):
 		interact()
+	if Input.is_action_just_pressed("show_inventory"):
+		show_inventory.emit()
+		
 	if Input.is_action_pressed("attack"):
 		attack()		
 	if Input.is_action_just_pressed("jump") and is_on_floor():
