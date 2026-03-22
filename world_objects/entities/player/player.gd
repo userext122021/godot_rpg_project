@@ -4,6 +4,9 @@ class_name Player
 var mouse_sensitivity:float=0.002
 @onready var camera = $CameraPivot/Camera3D
 
+var interactable:Interactable=null
+
+
 func _ready():
 	super._ready()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Прячем курсор
@@ -15,12 +18,38 @@ func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * mouse_sensitivity)
 		camera.rotate_x(-event.relative.y * mouse_sensitivity)
-		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
+		camera.rotation.x = clamp(camera.rotation.x, -max_rotation_x, max_rotation_x)
 
+func check_interaction(delta):
+	if $InteractRay.is_colliding():
+		var i_body:Node3D=$InteractRay.get_collider()
+		if i_body.has_node("Interactable"):
+			var i:Interactable=i_body.get_node("Interactable")
+			interactable=i
+			$InteractRay/Label3D.text=i.interact_text
+			$InteractRay/Label3D.show()
+			
+	else:
+		interactable=null
+		if $InteractRay/Label3D.visible:
+			$InteractRay/Label3D.hide()
+	pass
+func interact():
+	if interactable==null:
+		return
+	interactable.interact(self)
+	
 func _physics_process(delta):
+	super._physics_process(delta)
 	if not is_on_floor():
 		velocity.y += get_gravity().y * delta
 	
+	
+	check_interaction(delta)
+	if Input.is_action_just_pressed("interact"):
+		interact()
+	if Input.is_action_pressed("attack"):
+		attack()		
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		#set_state(State.JUMP)
 		is_jumping=true

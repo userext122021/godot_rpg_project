@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bihegv11tkr1n"]
+
+[ext_resource type="Script" uid="uid://dqx7sacoh21cr" path="res://world_objects/weapon/base_weapon.gd" id="1_hmlga"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_hmlga"]
+radius = 0.1
+height = 0.2
+
+[node name="BaseWeapon" type="Node3D"]
+script = ExtResource("1_hmlga")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -2)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9)
+mesh = SubResource("SphereMesh_hmlga")

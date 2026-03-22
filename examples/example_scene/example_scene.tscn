@@ -1,10 +1,22 @@
-[gd_scene load_steps=8 format=3 uid="uid://bh5jh50ap76ej"]
+[gd_scene load_steps=18 format=3 uid="uid://bh5jh50ap76ej"]
 
 [ext_resource type="PackedScene" uid="uid://djphclfgekh58" path="res://examples/example_scene/player.tscn" id="1_1kmlx"]
 [ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://world_objects/entities/stats_data.gd" id="2_vx6j6"]
+[ext_resource type="PackedScene" uid="uid://bu0dr0fcl6bph" path="res://world_objects/props/base_prop.tscn" id="4_3wino"]
+[ext_resource type="PackedScene" uid="uid://dsolwjgdf1gac" path="res://world_objects/controls/interactable.tscn" id="5_k3qqm"]
+[ext_resource type="PackedScene" uid="uid://ql4sqwxgai4h" path="res://world_objects/entities/base_enemy/base_enemy.tscn" id="6_k3qqm"]
+[ext_resource type="PackedScene" uid="uid://bihegv11tkr1n" path="res://world_objects/weapon/base_weapon.tscn" id="7_bqblc"]
+[ext_resource type="Script" uid="uid://dsyhdks3kftvo" path="res://world_objects/weapon/weapon_data.gd" id="8_wh25s"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wh25s"]
+
+[sub_resource type="Sky" id="Sky_3j6rv"]
+sky_material = SubResource("ProceduralSkyMaterial_wh25s")
 
 [sub_resource type="Environment" id="Environment_r2bdb"]
+background_mode = 2
+sky = SubResource("Sky_3j6rv")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_1kmlx"]
 size = Vector2(64, 64)
@@ -12,11 +24,28 @@ size = Vector2(64, 64)
 [sub_resource type="BoxShape3D" id="BoxShape3D_vx6j6"]
 size = Vector3(64, 1, 64)
 
-[sub_resource type="Resource" id="Resource_n2gaa"]
+[sub_resource type="Resource" id="Resource_bqblc"]
 script = ExtResource("2_vx6j6")
+entity_name = "player"
+entity_category = "player"
 hp = null
 stamina = null
 metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
+
+[sub_resource type="Resource" id="Resource_wh25s"]
+script = ExtResource("8_wh25s")
+metadata/_custom_type_script = "uid://dsyhdks3kftvo"
+
+[sub_resource type="Resource" id="Resource_k3qqm"]
+script = ExtResource("2_vx6j6")
+speed = 2.0
+hp = null
+stamina = null
+metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
+
+[sub_resource type="Resource" id="Resource_3j6rv"]
+script = ExtResource("8_wh25s")
+metadata/_custom_type_script = "uid://dsyhdks3kftvo"
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_n2gaa")
@@ -26,6 +55,7 @@ environment = SubResource("Environment_r2bdb")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.50000006, 0.8660254, 0, -0.8660254, -0.50000006, 0, 15, 0)
+shadow_enabled = true
 
 [node name="Ground" type="StaticBody3D" parent="."]
 
@@ -36,7 +66,25 @@ mesh = SubResource("PlaneMesh_1kmlx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_vx6j6")
 
-[node name="Player" parent="." instance=ExtResource("1_1kmlx")]
-stats_data = SubResource("Resource_n2gaa")
+[node name="Player" parent="." node_paths=PackedStringArray("weapon") instance=ExtResource("1_1kmlx")]
+stats_data = SubResource("Resource_bqblc")
+weapon = NodePath("BaseWeapon")
+
+[node name="BaseWeapon" parent="Player" instance=ExtResource("7_bqblc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+data = SubResource("Resource_wh25s")
+
+[node name="BaseProp" parent="." instance=ExtResource("4_3wino")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+
+[node name="Interactable" parent="BaseProp" instance=ExtResource("5_k3qqm")]
+
+[node name="BaseEnemy" parent="." instance=ExtResource("6_k3qqm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+stats_data = SubResource("Resource_k3qqm")
+
+[node name="BaseWeapon" parent="BaseEnemy" instance=ExtResource("7_bqblc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+data = SubResource("Resource_3j6rv")
 
 [connection signal="state_changed" from="Player" to="." method="_on_player_state_changed"]

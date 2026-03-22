@@ -7,6 +7,9 @@ enum State {IDLE,WALK,RUN,JUMP,EXT}
 
 @onready var stats:StatsControl=$StatsControl
 @export var stats_data:StatsData
+@export var max_rotation_x:float=PI/6
+@export var weapon:BaseWeapon=null
+
 var current_state:State=State.IDLE
 var ext_state:String="NONE"
 
@@ -19,10 +22,15 @@ var is_run_attacking:bool=false
 var is_jump_attacking:bool=false
 
 func _ready() -> void:
-	#print("DEBUG: base_entity _ready()")
-	stats.data=stats_data
+	$MeshInstance3D.mesh=$MeshInstance3D.mesh.duplicate()
+	$CollisionShape3D.shape=$CollisionShape3D.shape.duplicate()
+	stats.data=stats_data.duplicate()
 	pass
-
+func _physics_process(delta: float) -> void:
+	if is_attacking:
+		if weapon:
+			if not weapon.is_attacking:
+				is_attacking=false
 func set_state(new_state:State):
 	if new_state==current_state:
 		return
@@ -53,3 +61,14 @@ func update_state():
 	if new_state!=current_state:
 		state_changed.emit(new_state,current_state)
 		current_state=new_state
+
+func take_damage(damage:float):
+	stats.take_damage(damage)
+
+func attack():
+	
+	if weapon:
+		if weapon.can_attck():
+			print("DEBUG: attack")
+			is_attacking=true
+			weapon.attack()
