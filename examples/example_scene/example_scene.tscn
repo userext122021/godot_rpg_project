@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bh5jh50ap76ej"]
+[gd_scene load_steps=23 format=3 uid="uid://bh5jh50ap76ej"]
 
 [ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://game_objects/entities/stats_data.gd" id="2_vx6j6"]
@@ -21,11 +21,17 @@ sky_material = SubResource("ProceduralSkyMaterial_wh25s")
 background_mode = 2
 sky = SubResource("Sky_3j6rv")
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_1kmlx"]
-size = Vector2(64, 64)
+[sub_resource type="Resource" id="Resource_kwhvy"]
+script = ExtResource("11_wvpry")
+metadata/_custom_type_script = "uid://cfm5bwss6j1sn"
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_vx6j6"]
-size = Vector3(64, 1, 64)
+[sub_resource type="Resource" id="Resource_ff2r5"]
+script = ExtResource("2_vx6j6")
+entity_name = "player"
+entity_category = "player"
+metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvpry"]
 
 [sub_resource type="Resource" id="Resource_wvpry"]
 script = ExtResource("2_vx6j6")
@@ -38,9 +44,15 @@ metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
 script = ExtResource("8_wh25s")
 metadata/_custom_type_script = "uid://dsyhdks3kftvo"
 
-[sub_resource type="Resource" id="Resource_kwhvy"]
-script = ExtResource("11_wvpry")
-metadata/_custom_type_script = "uid://cfm5bwss6j1sn"
+[sub_resource type="NavigationMesh" id="NavigationMesh_wvpry"]
+vertices = PackedVector3Array(-31.5, 0.5, -31.5, -31.5, 0.5, 31.5, 31.5, 0.5, 31.5, 31.5, 0.5, -31.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1kmlx"]
+size = Vector2(64, 64)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vx6j6"]
+size = Vector3(64, 1, 64)
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_n2gaa")
@@ -52,28 +64,6 @@ environment = SubResource("Environment_r2bdb")
 transform = Transform3D(1, 0, 0, 0, -0.50000006, 0.8660254, 0, -0.8660254, -0.50000006, 0, 15, 0)
 shadow_enabled = true
 
-[node name="Ground" type="StaticBody3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("PlaneMesh_1kmlx")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-shape = SubResource("BoxShape3D_vx6j6")
-
-[node name="BaseProp" parent="." instance=ExtResource("4_3wino")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
-
-[node name="Interactable" parent="BaseProp" instance=ExtResource("5_k3qqm")]
-
-[node name="BaseEnemy" parent="." instance=ExtResource("6_k3qqm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
-stats_data = SubResource("Resource_wvpry")
-
-[node name="BaseWeapon" parent="BaseEnemy" instance=ExtResource("7_bqblc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-data = SubResource("Resource_3j6rv")
-
 [node name="Ui" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_3j6rv")]
 player = NodePath("../ExamplePlayer")
 
@@ -82,3 +72,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0)
 data = SubResource("Resource_kwhvy")
 
 [node name="ExamplePlayer" parent="." instance=ExtResource("11_kwhvy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+stats_data = SubResource("Resource_ff2r5")
+
+[node name="CollisionShape3D" parent="ExamplePlayer" index="1"]
+shape = SubResource("CapsuleShape3D_wvpry")
+
+[node name="BaseEnemy" parent="." instance=ExtResource("6_k3qqm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+stats_data = SubResource("Resource_wvpry")
+
+[node name="BaseWeapon" parent="BaseEnemy" instance=ExtResource("7_bqblc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+data = SubResource("Resource_3j6rv")
+
+[node name="BaseProp" parent="BaseEnemy" instance=ExtResource("4_3wino")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 11)
+
+[node name="Interactable" parent="BaseEnemy/BaseProp" instance=ExtResource("5_k3qqm")]
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_wvpry")
+
+[node name="Ground" type="StaticBody3D" parent="NavigationRegion3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D/Ground"]
+mesh = SubResource("PlaneMesh_1kmlx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_vx6j6")
+
+[editable path="ExamplePlayer"]
