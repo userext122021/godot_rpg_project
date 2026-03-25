@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cv3lor33tvxk7"]
 
-[ext_resource type="Script" uid="uid://bfw6hgb1vk2yc" path="res://game_objects/entities/inventory.gd" id="1_4jujm"]
+[ext_resource type="Script" uid="uid://bfw6hgb1vk2yc" path="res://core/entities/inventory.gd" id="1_4jujm"]
 
 [node name="Inventory" type="Node"]
 script = ExtResource("1_4jujm")

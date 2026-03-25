@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bihegv11tkr1n"]
 
-[ext_resource type="Script" uid="uid://dqx7sacoh21cr" path="res://game_objects/weapon/base_weapon.gd" id="1_hmlga"]
+[ext_resource type="Script" uid="uid://dqx7sacoh21cr" path="res://core/weapon/base_weapon.gd" id="1_hmlga"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_hmlga"]
 radius = 0.1

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cv1o3hi54hoeq"]
 
-[ext_resource type="Script" uid="uid://boqj8w00f0nyv" path="res://game_objects/entities/base_entity.gd" id="1_0obxt"]
-[ext_resource type="PackedScene" uid="uid://dcr255alfp5o7" path="res://game_objects/entities/stats_control.tscn" id="2_mkgnr"]
+[ext_resource type="Script" uid="uid://boqj8w00f0nyv" path="res://core/entities/base_entity.gd" id="1_0obxt"]
+[ext_resource type="PackedScene" uid="uid://dcr255alfp5o7" path="res://core/entities/stats_control.tscn" id="2_mkgnr"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mkgnr"]
 

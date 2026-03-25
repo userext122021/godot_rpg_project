@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://60uax6mdioib"]
 
-[ext_resource type="Script" uid="uid://cqoebcbh0tl00" path="res://game_objects/entities/base_ai.gd" id="1_4tspk"]
+[ext_resource type="Script" uid="uid://cqoebcbh0tl00" path="res://core/entities/base_ai.gd" id="1_4tspk"]
 
 [node name="BaseAI" type="Node"]
 script = ExtResource("1_4tspk")

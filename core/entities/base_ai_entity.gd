@@ -57,7 +57,7 @@ func move_to_target(delta: float):
 
 	# 3. Получаем следующую точку пути
 	var next_pos: Vector3 = nav_agent.get_next_path_position()
-	
+	rotate_towards_position(next_pos,delta)
 	# 4. Рассчитываем направление (только по горизонтали XZ)
 	var dir = global_position.direction_to(next_pos)
 	dir.y = 0 
@@ -77,7 +77,7 @@ func move_to_target(delta: float):
 		stop_moving()
 
 	
-func move_to_target1(delta: float):
+func move_direct_to_target(delta: float):
 	speed=stats.data.speed
 	if global_position.distance_to(target_position)<minimal_distance:
 		return
