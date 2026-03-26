@@ -1,14 +1,13 @@
-[gd_scene load_steps=23 format=3 uid="uid://bh5jh50ap76ej"]
+[gd_scene load_steps=20 format=3 uid="uid://bh5jh50ap76ej"]
 
 [ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://core/entities/stats_data.gd" id="2_vx6j6"]
 [ext_resource type="PackedScene" uid="uid://bu0dr0fcl6bph" path="res://core/props/base_prop.tscn" id="4_3wino"]
 [ext_resource type="PackedScene" uid="uid://dsolwjgdf1gac" path="res://core/controls/interactable.tscn" id="5_k3qqm"]
-[ext_resource type="PackedScene" uid="uid://ql4sqwxgai4h" path="res://core/entities/base_enemy/base_enemy.tscn" id="6_k3qqm"]
-[ext_resource type="PackedScene" uid="uid://bihegv11tkr1n" path="res://core/weapon/base_weapon.tscn" id="7_bqblc"]
-[ext_resource type="Script" uid="uid://dsyhdks3kftvo" path="res://core/weapon/weapon_data.gd" id="8_wh25s"]
 [ext_resource type="PackedScene" uid="uid://d1pyrlgd5n7j6" path="res://core/ui/ui.tscn" id="9_3j6rv"]
+[ext_resource type="PackedScene" uid="uid://c8vdp010stbue" path="res://core/entities/spawner.tscn" id="9_5j028"]
 [ext_resource type="PackedScene" uid="uid://dyj5ecitscci1" path="res://core/pickable/base_pickable.tscn" id="10_5j028"]
+[ext_resource type="PackedScene" uid="uid://dixyvmip4sn7o" path="res://debug/debug_enemy.tscn" id="10_wvpry"]
 [ext_resource type="PackedScene" uid="uid://djphclfgekh58" path="res://examples/example_scene/example_player.tscn" id="11_kwhvy"]
 [ext_resource type="Script" uid="uid://cfm5bwss6j1sn" path="res://core/pickable/pickable_data.gd" id="11_wvpry"]
 
@@ -32,18 +31,6 @@ entity_category = "player"
 metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvpry"]
-
-[sub_resource type="Resource" id="Resource_wvpry"]
-script = ExtResource("2_vx6j6")
-speed = 2.0
-rotation_speed = 2.0
-max_hp = 20.0
-hp = 20.0
-metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
-
-[sub_resource type="Resource" id="Resource_3j6rv"]
-script = ExtResource("8_wh25s")
-metadata/_custom_type_script = "uid://dsyhdks3kftvo"
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_wvpry"]
 vertices = PackedVector3Array(-31.5, 0.5, 9, -1, 0.5, 9, -0.75, 0.5, 8, 0.25, 0.5, -31.5, -31.5, 0.5, -31.5, 0.25, 0.5, 8, 1, 0.5, 8, 1.25, 0.5, 9, 31.5, 0.5, 9, 31.5, 0.5, -31.5, 0, 0.5, 31.5, 0, 0.5, 10.25, -1, 0.5, 10, -31.5, 0.5, 31.5, 0.75, 0.5, 10.25, 31.5, 0.5, 31.5)
@@ -79,15 +66,6 @@ stats_data = SubResource("Resource_ff2r5")
 [node name="CollisionShape3D" parent="ExamplePlayer" index="1"]
 shape = SubResource("CapsuleShape3D_wvpry")
 
-[node name="BaseEnemy" parent="." instance=ExtResource("6_k3qqm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
-speed = 2.0
-stats_data = SubResource("Resource_wvpry")
-
-[node name="BaseWeapon" parent="BaseEnemy" instance=ExtResource("7_bqblc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-data = SubResource("Resource_3j6rv")
-
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_wvpry")
 
@@ -104,6 +82,9 @@ shape = SubResource("BoxShape3D_vx6j6")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
 
 [node name="Interactable" parent="NavigationRegion3D/BaseProp" instance=ExtResource("5_k3qqm")]
+
+[node name="Spawner" parent="." instance=ExtResource("9_5j028")]
+scene = ExtResource("10_wvpry")
 
 [connection signal="item_used" from="ExamplePlayer/Inventory" to="ExamplePlayer" method="_on_inventory_item_used"]
 

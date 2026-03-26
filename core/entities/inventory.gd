@@ -73,3 +73,14 @@ func use_item(item_name:String):
 	#		remove_item(item_name,1.0)
 	#		item_used.emit(item_name)
 	item_used.emit(item_name)
+
+func get_item_data(item_name:String) -> PickableData:
+	if items_data.has(item_name):
+		return items_data[item_name]
+	return null
+
+func is_item_usable(item_name:String) -> bool:
+	var d:PickableData=get_item_data(item_name)
+	if not d:
+		return false
+	return d.is_usable
