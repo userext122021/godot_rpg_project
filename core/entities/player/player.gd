@@ -8,7 +8,7 @@ var mouse_sensitivity:float=0.002
 @onready var camera = $CameraPivot/Camera3D
 
 var interactable:Interactable=null
-
+var current_workstation:String="none"
 
 func _ready():
 	super._ready()
@@ -33,7 +33,7 @@ func check_interaction(delta):
 			if i_body.has_node("Interactable"):
 				var i:Interactable=i_body.get_node("Interactable")
 				interactable=i
-				$InteractRay/Label3D.text=i.interact_text
+				$InteractRay/Label3D.text=i.get_interaction_text()
 				$InteractRay/Label3D.show()
 			
 	else:
@@ -41,11 +41,14 @@ func check_interaction(delta):
 		if $InteractRay/Label3D.visible:
 			$InteractRay/Label3D.hide()
 	pass
+	
 func interact():
 	if interactable==null:
 		return
+	current_workstation=interactable.get_category()
 	interactable.interact(self)
 	interaction_started.emit()
+	
 	
 func _physics_process(delta):
 	super._physics_process(delta)

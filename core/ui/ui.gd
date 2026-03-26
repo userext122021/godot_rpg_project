@@ -8,14 +8,23 @@ class_name UI
 @onready var item_list=$MainWindow/HBoxContainer/InventoryWindow/HBoxContainer/ItemList
 @onready var amount_list=$MainWindow/HBoxContainer/InventoryWindow/HBoxContainer/AmountList
 @onready var recipe_list=$MainWindow/HBoxContainer/CraftWindow/ListContainer/RecipeList
-
+var is_workbench_enabled:bool=false
 
 func _ready() -> void:
 	player.show_inventory.connect(show_inventory)
-	
+	player.interaction_started.connect(on_interaction_started)
 	pass
-	
 
+
+func enable_workbench():
+	print("UI: WORKBENCH ENABLED")
+	is_workbench_enabled=true
+		
+func on_interaction_started():
+	if player.current_workstation=="workbench":
+		enable_workbench()
+		show_inventory()
+	
 func show_inventory():
 	print("INVENTORY: ",player.get_inventory().items)
 	show_ui()
@@ -51,8 +60,15 @@ func update_craft_list():
 func update_ui():
 	update_inventory_list()	
 	update_craft_list()
+
+func show_statuses():
+	if is_workbench_enabled:
+		$MainWindow/Statuses/WorkbechEnabled.show()
+	else:
+		$MainWindow/Statuses/WorkbechEnabled.hide()
 func show_ui():
 	$MainWindow.show()
+	show_statuses()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	pass
 
@@ -61,6 +77,7 @@ func hide_all_windows():
 func hide_ui():
 	hide_all_windows()
 	$MainWindow.hide()
+	is_workbench_enabled=false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 

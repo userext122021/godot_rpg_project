@@ -1,12 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://bh5jh50ap76ej"]
+[gd_scene load_steps=24 format=3 uid="uid://bh5jh50ap76ej"]
 
 [ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://core/entities/stats_data.gd" id="2_vx6j6"]
 [ext_resource type="PackedScene" uid="uid://bu0dr0fcl6bph" path="res://core/props/base_prop.tscn" id="4_3wino"]
 [ext_resource type="PackedScene" uid="uid://dsolwjgdf1gac" path="res://core/controls/interactable.tscn" id="5_k3qqm"]
+[ext_resource type="Script" uid="uid://nfvghq4yke8r" path="res://core/props/prop_data.gd" id="8_kwhvy"]
 [ext_resource type="PackedScene" uid="uid://d1pyrlgd5n7j6" path="res://core/ui/ui.tscn" id="9_3j6rv"]
 [ext_resource type="PackedScene" uid="uid://c8vdp010stbue" path="res://core/entities/spawner.tscn" id="9_5j028"]
 [ext_resource type="PackedScene" uid="uid://dyj5ecitscci1" path="res://core/pickable/base_pickable.tscn" id="10_5j028"]
+[ext_resource type="Script" uid="uid://d02ghumma662r" path="res://core/controls/interactable_data.gd" id="10_ff2r5"]
 [ext_resource type="PackedScene" uid="uid://dixyvmip4sn7o" path="res://debug/debug_enemy.tscn" id="10_wvpry"]
 [ext_resource type="PackedScene" uid="uid://djphclfgekh58" path="res://examples/example_scene/example_player.tscn" id="11_kwhvy"]
 [ext_resource type="Script" uid="uid://cfm5bwss6j1sn" path="res://core/pickable/pickable_data.gd" id="11_wvpry"]
@@ -41,6 +43,17 @@ size = Vector2(64, 64)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vx6j6"]
 size = Vector3(64, 1, 64)
+
+[sub_resource type="Resource" id="Resource_j2cqc"]
+script = ExtResource("8_kwhvy")
+hp = null
+metadata/_custom_type_script = "uid://nfvghq4yke8r"
+
+[sub_resource type="Resource" id="Resource_eucu4"]
+script = ExtResource("10_ff2r5")
+interactable_name = "workbench"
+interactable_category = "workbench"
+metadata/_custom_type_script = "uid://d02ghumma662r"
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_n2gaa")
@@ -78,10 +91,12 @@ mesh = SubResource("PlaneMesh_1kmlx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_vx6j6")
 
-[node name="BaseProp" parent="NavigationRegion3D" instance=ExtResource("4_3wino")]
+[node name="Workbench" parent="NavigationRegion3D" instance=ExtResource("4_3wino")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+data = SubResource("Resource_j2cqc")
 
-[node name="Interactable" parent="NavigationRegion3D/BaseProp" instance=ExtResource("5_k3qqm")]
+[node name="Interactable" parent="NavigationRegion3D/Workbench" instance=ExtResource("5_k3qqm")]
+data = SubResource("Resource_eucu4")
 
 [node name="Spawner" parent="." instance=ExtResource("9_5j028")]
 scene = ExtResource("10_wvpry")
