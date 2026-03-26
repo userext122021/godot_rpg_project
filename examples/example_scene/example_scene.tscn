@@ -105,4 +105,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
 
 [node name="Interactable" parent="NavigationRegion3D/BaseProp" instance=ExtResource("5_k3qqm")]
 
+[connection signal="item_used" from="ExamplePlayer/Inventory" to="ExamplePlayer" method="_on_inventory_item_used"]
+
 [editable path="ExamplePlayer"]

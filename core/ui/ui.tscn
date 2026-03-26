@@ -12,15 +12,87 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_nb4k0")
 
-[node name="ExitButton" type="Button" parent="."]
+[node name="MainWindow" type="VBoxContainer" parent="."]
 visible = false
-layout_mode = 0
-offset_left = 677.0
-offset_top = 1000.0
-offset_right = 1181.0
-offset_bottom = 1042.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainWindow"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InventoryWindow" type="VBoxContainer" parent="MainWindow/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MainWindow/HBoxContainer/InventoryWindow"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Inventory"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainWindow/HBoxContainer/InventoryWindow"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemList" type="ItemList" parent="MainWindow/HBoxContainer/InventoryWindow/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AmountList" type="ItemList" parent="MainWindow/HBoxContainer/InventoryWindow/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="MainWindow/HBoxContainer/InventoryWindow"]
+layout_mode = 2
+
+[node name="UseButton" type="Button" parent="MainWindow/HBoxContainer/InventoryWindow/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Use"
+
+[node name="DropButton" type="Button" parent="MainWindow/HBoxContainer/InventoryWindow/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Drop
+"
+
+[node name="CraftWindow" type="VBoxContainer" parent="MainWindow/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MainWindow/HBoxContainer/CraftWindow"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Crafting"
+
+[node name="ListContainer" type="HBoxContainer" parent="MainWindow/HBoxContainer/CraftWindow"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RecipeList" type="ItemList" parent="MainWindow/HBoxContainer/CraftWindow/ListContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="MainWindow/HBoxContainer/CraftWindow"]
+layout_mode = 2
+
+[node name="CraftButton" type="Button" parent="MainWindow/HBoxContainer/CraftWindow/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Craft"
+
+[node name="ExitButton" type="Button" parent="MainWindow"]
+layout_mode = 2
+size_flags_vertical = 8
 theme_override_font_sizes/font_size = 24
 text = "Exit
 "
 
-[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="MainWindow/HBoxContainer/InventoryWindow/ButtonsContainer/UseButton" to="." method="_on_use_button_pressed"]
+[connection signal="pressed" from="MainWindow/HBoxContainer/CraftWindow/ButtonsContainer/CraftButton" to="." method="_on_craft_button_pressed"]
+[connection signal="pressed" from="MainWindow/ExitButton" to="." method="_on_exit_button_pressed"]

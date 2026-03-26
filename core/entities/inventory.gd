@@ -41,8 +41,8 @@ func can_craft(recipe_name: String) -> bool:
 	var recipe = get_recipe(recipe_name)
 	if not recipe: return false
 	
-	for ingredient in recipe.ingredients:
-		var required_amount = recipe.ingredients[ingredient]
+	for ingredient in recipe.ingredients.keys():
+		var required_amount = recipe.ingredients.get(ingredient)
 		if get_amount_of(ingredient) < required_amount:
 			return false
 	return true
@@ -53,8 +53,8 @@ func craft(recipe_name: String):
 		
 	var recipe = get_recipe(recipe_name)
 	# Убираем ресурсы
-	for ingredient in recipe.ingredients:
-		remove_item(ingredient, recipe.ingredients[ingredient])
+	for ingredient in recipe.ingredients.keys():
+		remove_item(ingredient, recipe.ingredients.get(ingredient))
 	
 	# Добавляем результат (предполагаем, что в RecipeData есть result_name и result_amount)
 	add_item(recipe.result_name, recipe.result_amount)
@@ -67,8 +67,9 @@ func add_recipe(recipe_name: String, recipe_data: RecipeData):
 func use_item(item_name:String):
 	if not has_item(item_name):
 		return
-	if items_data.has(item_name):
-		var data:PickableData=items_data[item_name]
-		if data.is_usable:
-			remove_item(item_name,1.0)
-			item_used.emit(item_name)
+	#if items_data.has(item_name):
+	#	var data:PickableData=items_data[item_name]
+	#	if data.is_usable:
+	#		remove_item(item_name,1.0)
+	#		item_used.emit(item_name)
+	item_used.emit(item_name)
