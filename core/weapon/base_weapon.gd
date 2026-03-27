@@ -41,7 +41,7 @@ func hit(target_body:Node3D) -> float:
 		return 0.0
 	
 	#target_body.take_damage(data.damage)
-	return target_body.take_hit(data,get_parent())
+	return target_body.take_hit(data,global_position)
 	
 
 func attack():
