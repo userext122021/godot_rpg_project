@@ -1,8 +1,8 @@
 extends Node3D
 class_name BaseWeapon
 
-signal attack_started(weapon_body:Node3D)
-signal attack_finished(weapon_body:Node3D)
+signal attack_started(weapon:BaseWeapon)
+signal attack_finished(weapon:BaseWeapon)
 
 
 @export var data:WeaponData
@@ -23,6 +23,7 @@ func _process(delta: float) -> void:
 				is_attacking=false
 				is_cooldown=true
 				cooldown_timer=data.cooldown_time
+				attack_finished.emit(self)
 				return
 			
 		attack_timer-=delta
@@ -30,6 +31,7 @@ func _process(delta: float) -> void:
 			is_attacking=false
 			is_cooldown=true
 			cooldown_timer=data.cooldown_time
+			attack_finished.emit(self)
 			return
 	if is_cooldown:
 		cooldown_timer-=delta
@@ -52,6 +54,7 @@ func attack():
 		return
 	is_attacking=true
 	attack_timer=data.attack_time
+	attack_started.emit(self)
 
 func can_attack() -> bool:
 	if is_attacking:
