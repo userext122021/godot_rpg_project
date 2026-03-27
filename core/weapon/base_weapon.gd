@@ -10,13 +10,16 @@ var is_attacking:bool=false
 var is_cooldown:bool=false
 var attack_timer:float=0
 var cooldown_timer:float=0
+var last_attack_damage:float=0.0
 
 func _ready() -> void:
 	$RayCast3D.target_position.z=-data.range
 func _process(delta: float) -> void:
 	if is_attacking:
 		if $RayCast3D.is_colliding():
-			if hit($RayCast3D.get_collider()):
+			var damage=hit($RayCast3D.get_collider())
+			if damage>0.0:
+				last_attack_damage=damage
 				is_attacking=false
 				is_cooldown=true
 				cooldown_timer=data.cooldown_time
