@@ -48,12 +48,12 @@ func hit(target_body:Node3D) -> float:
 	
 
 func attack():
-	if not can_attck():
+	if not can_attack():
 		return
 	is_attacking=true
 	attack_timer=data.attack_time
 
-func can_attck() -> bool:
+func can_attack() -> bool:
 	if is_attacking:
 		return false
 	if is_cooldown:
