@@ -40,7 +40,8 @@ func hit(target_body:Node3D) -> bool:
 	if not target_body.has_method("take_damage"):
 		return false
 	
-	target_body.take_damage(data.damage)
+	#target_body.take_damage(data.damage)
+	target_body.take_hit(data,get_parent())
 	return true
 
 func attack():
