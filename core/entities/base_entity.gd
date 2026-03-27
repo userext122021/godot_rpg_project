@@ -63,8 +63,9 @@ func update_state():
 		state_changed.emit(new_state,current_state)
 		current_state=new_state
 
-func take_damage(damage:float):
+func take_damage(damage:float) -> float:
 	stats.take_damage(damage)
+	return damage
 
 func take_hit(weapon_data:WeaponData,attacker_body:Node3D) -> float:
 	#process other hit parameters
