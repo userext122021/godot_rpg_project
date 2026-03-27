@@ -14,19 +14,17 @@ var last_attack_damage:float=0.0
 
 func _ready() -> void:
 	$RayCast3D.target_position.z=-data.range
+
 func _process(delta: float) -> void:
 	if is_attacking:
+		attack_timer-=delta
 		if $RayCast3D.is_colliding():
-			var damage=hit($RayCast3D.get_collider())
-			if damage>0.0:
-				last_attack_damage=damage
+			if hit($RayCast3D.get_collider()):
 				is_attacking=false
 				is_cooldown=true
 				cooldown_timer=data.cooldown_time
 				attack_finished.emit(self)
 				return
-			
-		attack_timer-=delta
 		if attack_timer<=0:
 			is_attacking=false
 			is_cooldown=true
@@ -39,14 +37,14 @@ func _process(delta: float) -> void:
 			is_cooldown=false
 			return
 
-func hit(target_body:Node3D) -> float:
+func hit(target_body:Node3D) -> bool:
 	if not target_body:
-		return 0.0
+		return false
 	if not target_body.has_method("take_hit"):
-		return 0.0
-	
+		return false
 	#target_body.take_damage(data.damage)
-	return target_body.take_hit(data,global_position)
+	last_attack_damage=target_body.take_hit(data,global_position)
+	return true
 	
 
 func attack():
