@@ -34,15 +34,15 @@ func _process(delta: float) -> void:
 			is_cooldown=false
 			return
 
-func hit(target_body:Node3D) -> bool:
+func hit(target_body:Node3D) -> float:
 	if not target_body:
-		return false
-	if not target_body.has_method("take_damage"):
-		return false
+		return 0.0
+	if not target_body.has_method("take_hit"):
+		return 0.0
 	
 	#target_body.take_damage(data.damage)
-	target_body.take_hit(data,get_parent())
-	return true
+	return target_body.take_hit(data,get_parent())
+	
 
 func attack():
 	if not can_attck():
