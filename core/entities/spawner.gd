@@ -32,6 +32,7 @@ func spawn():
 	add_child(spawned_object)
 	spawned_object.global_position=global_position
 	spawned_object.tree_exited.connect(_on_object_tree_exited)
+	$Timer.stop()
 	pass
 
 
@@ -41,6 +42,7 @@ func _on_body_entered(body: Node3D) -> void:
 		if sc.data.entity_category=="player":
 			is_active=true
 			player_body=body
+			$Timer.start()
 	pass # Replace with function body.
 
 
@@ -50,6 +52,7 @@ func _on_body_exited(body: Node3D) -> void:
 		if sc.data.entity_category=="player":
 			is_active=false
 			player_body=null
+			$Timer.stop()
 	pass # Replace with function body.
 
 
@@ -60,3 +63,5 @@ func _on_timer_timeout() -> void:
 
 func _on_object_tree_exited():
 	spawned_object=null
+	if is_active:
+		$Timer.start()

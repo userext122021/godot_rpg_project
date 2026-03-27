@@ -6,8 +6,7 @@ signal damage_taken(damage:float)
 	
 @export var data:StatsData
 
-func take_damage(damage:float):
-	print("DEBUG taking damage ",damage)
+func take_damage(damage:float) -> float:
 	var new_hp=data.hp
 	new_hp-=damage
 	if new_hp<=0:
@@ -15,7 +14,8 @@ func take_damage(damage:float):
 		emit_signal("died")
 	data.hp=new_hp	
 	damage_taken.emit(damage)
-	pass
+	print("DEBUG taking damage ",damage)
+	return damage
 	
 func update(delta:float):
 	pass

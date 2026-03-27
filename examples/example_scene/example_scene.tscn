@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://bh5jh50ap76ej"]
+[gd_scene load_steps=26 format=3 uid="uid://bh5jh50ap76ej"]
 
 [ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://core/entities/stats_data.gd" id="2_vx6j6"]
 [ext_resource type="PackedScene" uid="uid://bu0dr0fcl6bph" path="res://core/props/base_prop.tscn" id="4_3wino"]
 [ext_resource type="PackedScene" uid="uid://dsolwjgdf1gac" path="res://core/controls/interactable.tscn" id="5_k3qqm"]
+[ext_resource type="Script" uid="uid://dsyhdks3kftvo" path="res://core/weapon/weapon_data.gd" id="7_ff2r5"]
 [ext_resource type="Script" uid="uid://nfvghq4yke8r" path="res://core/props/prop_data.gd" id="8_kwhvy"]
 [ext_resource type="PackedScene" uid="uid://d1pyrlgd5n7j6" path="res://core/ui/ui.tscn" id="9_3j6rv"]
 [ext_resource type="PackedScene" uid="uid://c8vdp010stbue" path="res://core/entities/spawner.tscn" id="9_5j028"]
@@ -33,6 +34,15 @@ entity_category = "player"
 metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvpry"]
+
+[sub_resource type="Resource" id="Resource_uyenh"]
+script = ExtResource("7_ff2r5")
+weapon_name = "player_weapon"
+damage = 7.0
+cooldown_time = 0.4
+attack_time = 0.4
+knockback_force = 5.0
+metadata/_custom_type_script = "uid://dsyhdks3kftvo"
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_wvpry"]
 vertices = PackedVector3Array(-31.5, 0.5, 9, -1, 0.5, 9, -0.75, 0.5, 8, 0.25, 0.5, -31.5, -31.5, 0.5, -31.5, 0.25, 0.5, 8, 1, 0.5, 8, 1.25, 0.5, 9, 31.5, 0.5, 9, 31.5, 0.5, -31.5, 0, 0.5, 31.5, 0, 0.5, 10.25, -1, 0.5, 10, -31.5, 0.5, 31.5, 0.75, 0.5, 10.25, 31.5, 0.5, 31.5)
@@ -78,6 +88,9 @@ stats_data = SubResource("Resource_ff2r5")
 
 [node name="CollisionShape3D" parent="ExamplePlayer" index="1"]
 shape = SubResource("CapsuleShape3D_wvpry")
+
+[node name="BaseWeapon" parent="ExamplePlayer" index="7"]
+data = SubResource("Resource_uyenh")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_wvpry")

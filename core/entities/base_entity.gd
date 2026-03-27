@@ -75,7 +75,7 @@ func take_hit(weapon_data:WeaponData,attacker_position:Vector3) -> float:
 func attack():
 	if weapon:
 		if weapon.can_attack():
-			print("DEBUG: attack")
+			#print("DEBUG: attack")
 			is_attacking=true
 			weapon.attack()
 
