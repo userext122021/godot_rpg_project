@@ -1,6 +1,7 @@
 extends Node3D
 class_name BaseWeapon
 
+
 signal attack_started(weapon:BaseWeapon)
 signal attack_finished(weapon:BaseWeapon)
 
@@ -13,23 +14,17 @@ var cooldown_timer:float=0
 var last_attack_damage:float=0.0
 
 func _ready() -> void:
-	$RayCast3D.target_position.z=-data.range
+	update()
 
 func _process(delta: float) -> void:
 	if is_attacking:
 		attack_timer-=delta
 		if $RayCast3D.is_colliding():
 			if hit($RayCast3D.get_collider()):
-				is_attacking=false
-				is_cooldown=true
-				cooldown_timer=data.cooldown_time
-				attack_finished.emit(self)
+				stop_attack()
 				return
 		if attack_timer<=0:
-			is_attacking=false
-			is_cooldown=true
-			cooldown_timer=data.cooldown_time
-			attack_finished.emit(self)
+			stop_attack()
 			return
 	if is_cooldown:
 		cooldown_timer-=delta
@@ -46,6 +41,14 @@ func hit(target_body:Node3D) -> bool:
 	last_attack_damage=target_body.take_hit(data,global_position)
 	return true
 	
+func stop_attack():
+	is_attacking=false
+	is_cooldown=true
+	cooldown_timer=data.cooldown_time
+	attack_finished.emit(self)
+
+func update():
+	$RayCast3D.target_position.z=-data.range
 
 func attack():
 	if not can_attack():
