@@ -9,3 +9,4 @@ class_name WeaponData
 @export var cooldown_time:float=1.0
 @export var attack_time:float=1.0
 @export var range:float=2.0
+@export var knockback_force:float=0.0
