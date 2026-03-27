@@ -66,6 +66,11 @@ func update_state():
 func take_damage(damage:float):
 	stats.take_damage(damage)
 
+func take_hit(weapon_data:WeaponData,attacker_body:Node3D) -> float:
+	#process other hit parameters
+	return take_damage(weapon_data.damage)
+
+
 func attack():
 	if weapon:
 		if weapon.can_attck():
