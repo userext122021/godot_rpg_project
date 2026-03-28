@@ -16,7 +16,8 @@ var prepare_attack_timer:float=0
 var last_attack_damage:float=0.0
 
 func _ready() -> void:
-	update()
+	if data:
+		update()
 
 func _process(delta: float) -> void:
 	if is_preparing:
@@ -58,7 +59,8 @@ func stop_attack():
 	attack_finished.emit(self)
 
 func update():
-	raycast.target_position.z=-data.range
+	if data and raycast:
+		raycast.target_position.z=-data.range
 
 func attack():
 	if not can_attack():
