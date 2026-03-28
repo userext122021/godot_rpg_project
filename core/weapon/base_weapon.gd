@@ -1,7 +1,7 @@
 extends Node3D
 class_name BaseWeapon
 
-
+@onready var raycast:RayCast3D=$RayCast3D
 signal attack_started(weapon:BaseWeapon)
 signal attack_finished(weapon:BaseWeapon)
 
@@ -9,18 +9,27 @@ signal attack_finished(weapon:BaseWeapon)
 @export var data:WeaponData
 var is_attacking:bool=false
 var is_cooldown:bool=false
+var is_preparing:bool=false
 var attack_timer:float=0
 var cooldown_timer:float=0
+var prepare_attack_timer:float=0
 var last_attack_damage:float=0.0
 
 func _ready() -> void:
 	update()
 
 func _process(delta: float) -> void:
+	if is_preparing:
+		prepare_attack_timer-=delta
+		if prepare_attack_timer<=0:
+			is_preparing=false
+			is_attacking=true
+			attack_timer=data.attack_time
+		return
 	if is_attacking:
 		attack_timer-=delta
-		if $RayCast3D.is_colliding():
-			if hit($RayCast3D.get_collider()):
+		if raycast.is_colliding():
+			if hit(raycast.get_collider()):
 				stop_attack()
 				return
 		if attack_timer<=0:
@@ -43,24 +52,29 @@ func hit(target_body:Node3D) -> bool:
 	
 func stop_attack():
 	is_attacking=false
+	is_preparing=false
 	is_cooldown=true
 	cooldown_timer=data.cooldown_time
 	attack_finished.emit(self)
 
 func update():
-	$RayCast3D.target_position.z=-data.range
+	raycast.target_position.z=-data.range
 
 func attack():
 	if not can_attack():
 		return
-	is_attacking=true
-	attack_timer=data.attack_time
+
+	#is_attacking=true
+	#attack_timer=data.attack_time
+	prepare_attack_timer=data.preparing_attack_time
 	attack_started.emit(self)
 
 func can_attack() -> bool:
 	if is_attacking:
 		return false
 	if is_cooldown:
+		return false
+	if is_preparing:
 		return false
 	return true
 		 
