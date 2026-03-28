@@ -8,6 +8,7 @@ class_name WeaponData
 @export var damage:float=3.0
 @export var adv_damage:float=0.0
 @export var cooldown_time:float=1.0
+@export var prepare_attack_time:float=0.0
 @export var attack_time:float=1.0
 @export var range:float=2.0
 @export var knockback_force:float=0.0
