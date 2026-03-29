@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://djphclfgekh58"]
 
-[ext_resource type="PackedScene" uid="uid://bka5xkdn0m6fa" path="res://core/entities/player/player.tscn" id="1_pmdal"]
+[ext_resource type="PackedScene" uid="uid://bka5xkdn0m6fa" path="res://core/entities/base_player/player.tscn" id="1_pmdal"]
 [ext_resource type="Script" uid="uid://cs4l3r1tvm53j" path="res://examples/example_scene/example_player.gd" id="2_e3ugx"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://core/entities/stats_data.gd" id="3_e3ugx"]
 [ext_resource type="PackedScene" uid="uid://bihegv11tkr1n" path="res://core/weapon/base_weapon.tscn" id="4_q21gh"]

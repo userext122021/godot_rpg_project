@@ -35,7 +35,7 @@ func _physics_process(delta: float) -> void:
 		is_target_reached=false
 		move_to_target(delta)
 	else:
-		if not target_reached:
+		if not is_target_reached:
 			target_reached.emit()
 		is_target_reached=true
 		stop_moving()

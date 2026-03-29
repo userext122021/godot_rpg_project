@@ -28,10 +28,8 @@ func _ready() -> void:
 	stats.data=stats_data.duplicate()
 	pass
 func _physics_process(delta: float) -> void:
-	if is_attacking:
-		if weapon:
-			if not weapon.is_attacking:
-				is_attacking=false
+	pass
+	
 func set_state(new_state:State):
 	if new_state==current_state:
 		return
