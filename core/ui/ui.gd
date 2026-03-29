@@ -3,18 +3,32 @@ class_name UI
 
 
 @export var player:Player
+@export var update_interval:float=0.5
 
 @onready var invenory_window=$MainWindow/HBoxContainer/InventoryWindow
 @onready var item_list=$MainWindow/HBoxContainer/InventoryWindow/HBoxContainer/ItemList
 @onready var amount_list=$MainWindow/HBoxContainer/InventoryWindow/HBoxContainer/AmountList
 @onready var recipe_list=$MainWindow/HBoxContainer/CraftWindow/ListContainer/RecipeList
 var is_workbench_enabled:bool=false
+var player_stats:StatsControl
+var is_paused:bool=false
+var update_timer:float=0
 
 func _ready() -> void:
+	process_mode=Node.PROCESS_MODE_PAUSABLE
 	player.show_inventory.connect(show_inventory)
 	player.interaction_started.connect(on_interaction_started)
+	player.tree_exited.connect(on_player_tree_exited)
+	player_stats=player.get_node("StatsControl")
 	pass
 
+func _process(delta: float) -> void:
+	if is_paused:
+		return
+	update_timer-=delta
+	if update_timer<=0:
+		update_timer=update_interval
+		update_stats()
 
 func enable_workbench():
 	print("UI: WORKBENCH ENABLED")
@@ -104,3 +118,15 @@ func _on_use_button_pressed() -> void:
 	player.get_inventory().use_item(get_active_item(item_list))
 	update_ui()
 	pass # Replace with function body.
+
+
+func update_stats():
+	$Stats/HpProgressBar.max_value=player_stats.data.max_hp
+	$Stats/HpProgressBar.value=player_stats.data.hp
+	$Stats/StaminaProgressBar.max_value=player_stats.data.max_stamina
+	$Stats/StaminaProgressBar.value=player_stats.data.stamina
+	
+	pass # Replace with function body.
+
+func on_player_tree_exited():
+	is_paused=true

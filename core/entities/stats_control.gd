@@ -19,3 +19,10 @@ func take_damage(damage:float) -> float:
 	
 func update(delta:float):
 	pass
+
+func regen(delta):
+	if data.hp<data.max_hp:
+		data.hp+=data.regen_hp_per_second*delta
+	if data.stamina<data.max_stamina:
+		data.stamina+=data.regen_stamina_per_second*delta
+		
