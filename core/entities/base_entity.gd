@@ -63,13 +63,19 @@ func update_state():
 		state_changed.emit(new_state,current_state)
 		current_state=new_state
 
-func take_damage(damage:float):
+func take_damage(damage:float) -> float:
 	stats.take_damage(damage)
+	return damage
+
+func take_hit(weapon_data:WeaponData,attacker_position:Vector3) -> float:
+	#process other hit parameters
+	return take_damage(weapon_data.damage)
+
 
 func attack():
 	if weapon:
-		if weapon.can_attck():
-			print("DEBUG: attack")
+		if weapon.can_attack():
+			#print("DEBUG: attack")
 			is_attacking=true
 			weapon.attack()
 
