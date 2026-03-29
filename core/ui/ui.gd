@@ -2,7 +2,7 @@ extends Control
 class_name UI
 
 
-@export var player:Player
+@export var player:BasePlayer
 @export var update_interval:float=0.5
 
 @onready var invenory_window=$MainWindow/HBoxContainer/InventoryWindow

@@ -1,4 +1,4 @@
-extends Player
+extends BasePlayer
 
 
 func _ready():

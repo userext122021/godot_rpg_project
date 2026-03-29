@@ -1,5 +1,5 @@
 extends BaseEntity
-class_name Player
+class_name BasePlayer
 
 signal show_inventory
 signal interaction_started

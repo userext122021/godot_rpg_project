@@ -7,6 +7,7 @@ class_name Spawner
 @export var scene:PackedScene
 var spawned_object:Node3D=null
 var player_body:Node3D=null
+var spawner_timer:float=0
 
 func _ready() -> void:
 	$Timer.wait_time=spawn_interval

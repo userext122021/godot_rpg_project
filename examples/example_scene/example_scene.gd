@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var player:Player=$ExamplePlayer
+@onready var player:BasePlayer=$ExamplePlayer
 func _ready() -> void:
 	player.tree_exited.connect(on_player_died)
 	#print("DEBUG: state_changed old:",old_state," new:",new_state)
