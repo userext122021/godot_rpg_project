@@ -17,7 +17,8 @@ func _ready() -> void:
 	player.stats.data.stamina*=0.7
 
 func on_player_died():
-	get_tree().quit()
+	if get_tree():
+		get_tree().quit()
 	pass
 	
 func _on_player_state_changed(new_state: BaseEntity.State, old_state: BaseEntity.State) -> void:
