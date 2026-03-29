@@ -68,7 +68,8 @@ func attack():
 
 	#is_attacking=true
 	#attack_timer=data.attack_time
-	prepare_attack_timer=data.preparing_attack_time
+	is_preparing=true
+	prepare_attack_timer=data.prepare_attack_time
 	attack_started.emit(self)
 
 func can_attack() -> bool:

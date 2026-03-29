@@ -37,11 +37,9 @@ metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
 
 [sub_resource type="Resource" id="Resource_uyenh"]
 script = ExtResource("7_ff2r5")
-weapon_name = "player_weapon"
 damage = 7.0
-cooldown_time = 0.4
-attack_time = 0.4
-knockback_force = 5.0
+cooldown_time = 0.2
+attack_time = 0.2
 metadata/_custom_type_script = "uid://dsyhdks3kftvo"
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_wvpry"]
@@ -112,6 +110,7 @@ data = SubResource("Resource_j2cqc")
 data = SubResource("Resource_eucu4")
 
 [node name="Spawner" parent="." instance=ExtResource("9_5j028")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
 scene = ExtResource("10_wvpry")
 
 [connection signal="item_used" from="ExamplePlayer/Inventory" to="ExamplePlayer" method="_on_inventory_item_used"]
