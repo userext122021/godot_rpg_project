@@ -7,7 +7,7 @@ signal entity_exited(body:Node3D)
 
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @export var target_position: Vector3
-@export var minimal_distance: float = 0.5
+@export var minimal_distance: float = 1.5
 @export var speed: float = 3.0
 @export var ai:BaseAI
 var is_target_reached:bool=false

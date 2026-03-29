@@ -1,6 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1pyrlgd5n7j6"]
+[gd_scene load_steps=4 format=3 uid="uid://d1pyrlgd5n7j6"]
 
 [ext_resource type="Script" uid="uid://dh3gw8cg4vxha" path="res://core/ui/ui.gd" id="1_nb4k0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gje2l"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.62, 0.17980002, 0.17980002, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_go6ch"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.2142, 0.32266003, 0.51, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
 
 [node name="Ui" type="Control"]
 layout_mode = 3
@@ -21,6 +45,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Statuses" type="HBoxContainer" parent="MainWindow"]
+layout_mode = 2
+
+[node name="WorkbechEnabled" type="Label" parent="MainWindow/Statuses"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Workbench"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainWindow"]
 layout_mode = 2
@@ -92,6 +124,29 @@ size_flags_vertical = 8
 theme_override_font_sizes/font_size = 24
 text = "Exit
 "
+
+[node name="Stats" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+offset_right = 200.0
+grow_vertical = 0
+
+[node name="HpProgressBar" type="ProgressBar" parent="Stats"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_styles/fill = SubResource("StyleBoxFlat_gje2l")
+show_percentage = false
+
+[node name="StaminaProgressBar" type="ProgressBar" parent="Stats"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_styles/fill = SubResource("StyleBoxFlat_go6ch")
+show_percentage = false
 
 [connection signal="pressed" from="MainWindow/HBoxContainer/InventoryWindow/ButtonsContainer/UseButton" to="." method="_on_use_button_pressed"]
 [connection signal="pressed" from="MainWindow/HBoxContainer/CraftWindow/ButtonsContainer/CraftButton" to="." method="_on_craft_button_pressed"]

@@ -15,6 +15,9 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 	if body.has_node("Inventory"):
 		var inv:Inventory=body.get_node("Inventory")
 		inv.add_item(data.pickable_name,amount)
+		var d=inv.get_item_data(data.pickable_name)
+		if not d:
+			inv.add_item_data(data.duplicate())
 		item_picked_up.emit(data.pickable_name,data.pickable_category,amount)
 		queue_free()
 	pass # Replace with function body.
