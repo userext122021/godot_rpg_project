@@ -4,6 +4,8 @@ class_name BasePlayer
 signal show_inventory
 signal interaction_started
 
+
+
 var mouse_sensitivity:float=0.002
 @onready var camera = $CameraPivot/Camera3D
 
@@ -54,6 +56,9 @@ func _physics_process(delta):
 	super._physics_process(delta)
 	if not is_on_floor():
 		velocity.y += get_gravity().y * delta
+	if is_on_floor() and is_jumping:
+		is_jumping=false
+		#unset_state(State.JUMP)
 	
 	if $InteractRay.is_colliding():
 		check_interaction(delta)
@@ -61,7 +66,11 @@ func _physics_process(delta):
 		interact()
 	if Input.is_action_just_pressed("show_inventory"):
 		show_inventory.emit()
-		
+	
+	if weapon:
+		if is_attacking:
+			if not weapon.is_attacking:
+				is_attacking=false
 	if Input.is_action_pressed("attack"):
 		attack()		
 	if Input.is_action_just_pressed("jump") and is_on_floor():
@@ -69,10 +78,10 @@ func _physics_process(delta):
 		is_jumping=true
 		velocity.y = stats.data.jump_speed
 	
-	if is_on_floor() and current_state==State.JUMP:
-		is_jumping=false
-		#unset_state(State.JUMP)
-			
+	if Input.is_action_pressed("run"):
+		is_running=true
+	elif not Input.is_action_pressed("run"):
+		is_running=false		
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
