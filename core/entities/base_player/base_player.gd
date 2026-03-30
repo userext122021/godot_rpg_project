@@ -4,6 +4,8 @@ class_name BasePlayer
 signal show_inventory
 signal interaction_started
 
+
+
 var mouse_sensitivity:float=0.002
 @onready var camera = $CameraPivot/Camera3D
 

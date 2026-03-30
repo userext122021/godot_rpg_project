@@ -11,6 +11,9 @@ enum State {IDLE,WALK,RUN,JUMP,EXT}
 @export var max_rotation_x:float=PI/6
 @export var weapon:BaseWeapon=null
 
+@onready var anim_tree = $AnimationTree
+@onready var anim_state_machine_playback:AnimationNodeStateMachinePlayback = anim_tree.get("parameters/playback")
+
 var current_state:State=State.IDLE
 var ext_state:String="NONE"
 
@@ -85,3 +88,17 @@ func die():
 func _on_stats_control_died() -> void:
 	die()
 	pass # Replace with function body.
+
+func update_animations():
+	var sm:AnimationNodeStateMachinePlayback=anim_state_machine_playback
+	if is_jumping:
+		sm.travel("jump")
+	elif is_running:
+		sm.travel("run")
+	elif is_attacking:
+		sm.travel("attack")
+	elif is_walking:
+		sm.travel("walk")
+	else:
+		sm.travel("idle") 
+		
