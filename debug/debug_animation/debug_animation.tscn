@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://p3y46jbsek3f"]
+
+[ext_resource type="PackedScene" uid="uid://80wukspueyig" path="res://debug/debug_animation/debug_player.tscn" id="1_glf3g"]
+[ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://core/entities/stats_data.gd" id="2_m0u5d"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uv3ei"]
+size = Vector3(64, 1, 64)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glf3g"]
+albedo_color = Color(0.45646393, 0.456464, 0.456464, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m0u5d"]
+material = SubResource("StandardMaterial3D_glf3g")
+size = Vector2(64, 64)
+
+[sub_resource type="Resource" id="Resource_0peig"]
+script = ExtResource("2_m0u5d")
+metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
+
+[sub_resource type="Environment" id="Environment_glf3g"]
+
+[node name="DebugAnimation" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_uv3ei")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_m0u5d")
+
+[node name="DebugPlayer" parent="." instance=ExtResource("1_glf3g")]
+stats_data = SubResource("Resource_0peig")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_glf3g")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 15, 0)

@@ -11,6 +11,9 @@ enum State {IDLE,WALK,RUN,JUMP,EXT}
 @export var max_rotation_x:float=PI/6
 @export var weapon:BaseWeapon=null
 
+@onready var anim_tree = $AnimationTree
+@onready var anim_state_machine_playback:AnimationNodeStateMachinePlayback = anim_tree.get("parameters/playback")
+
 var current_state:State=State.IDLE
 var ext_state:String="NONE"
 
@@ -26,12 +29,11 @@ func _ready() -> void:
 	$MeshInstance3D.mesh=$MeshInstance3D.mesh.duplicate()
 	$CollisionShape3D.shape=$CollisionShape3D.shape.duplicate()
 	stats.data=stats_data.duplicate()
+	stats_data=stats.data
 	pass
 func _physics_process(delta: float) -> void:
-	if is_attacking:
-		if weapon:
-			if not weapon.is_attacking:
-				is_attacking=false
+	pass
+	
 func set_state(new_state:State):
 	if new_state==current_state:
 		return
@@ -87,3 +89,17 @@ func die():
 func _on_stats_control_died() -> void:
 	die()
 	pass # Replace with function body.
+
+func update_animations():
+	var sm:AnimationNodeStateMachinePlayback=anim_state_machine_playback
+	if is_jumping:
+		sm.travel("jump")
+	elif is_running:
+		sm.travel("run")
+	elif is_attacking:
+		sm.travel("attack")
+	elif is_walking:
+		sm.travel("walk")
+	else:
+		sm.travel("idle") 
+		

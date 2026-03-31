@@ -18,8 +18,10 @@ func take_damage(damage:float) -> float:
 	return damage
 	
 func update(delta:float):
+	regen(delta)
 	pass
-
+func update_states(delta:float):
+	pass
 func regen(delta):
 	if data.hp<data.max_hp:
 		data.hp+=data.regen_hp_per_second*delta

@@ -22,4 +22,6 @@ shape = SubResource("CapsuleShape3D_v3bii")
 
 [node name="Pivot" type="Marker3D" parent="."]
 
+[node name="AnimationTree" type="AnimationTree" parent="."]
+
 [connection signal="died" from="StatsControl" to="." method="_on_stats_control_died"]
