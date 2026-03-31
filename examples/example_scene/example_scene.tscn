@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bh5jh50ap76ej"]
+[gd_scene load_steps=30 format=3 uid="uid://bh5jh50ap76ej"]
 
 [ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://core/entities/stats_data.gd" id="2_vx6j6"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://dixyvmip4sn7o" path="res://debug/debug_enemy.tscn" id="10_wvpry"]
 [ext_resource type="PackedScene" uid="uid://djphclfgekh58" path="res://examples/example_scene/example_player.tscn" id="11_kwhvy"]
 [ext_resource type="Script" uid="uid://cfm5bwss6j1sn" path="res://core/pickable/pickable_data.gd" id="11_wvpry"]
+[ext_resource type="Script" uid="uid://b6t64k0fhud4y" path="res://examples/example_scene/toxic_puddle.gd" id="14_eucu4"]
+[ext_resource type="PackedScene" uid="uid://1jvn5h23ufor" path="res://core/danger_zone/danger_zone.tscn" id="15_uyenh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wh25s"]
 
@@ -63,6 +65,15 @@ interactable_name = "workbench"
 interactable_category = "workbench"
 metadata/_custom_type_script = "uid://d02ghumma662r"
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8hg7t"]
+albedo_color = Color(0.3647059, 0.8235294, 0.32941177, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_bkfou"]
+material = SubResource("StandardMaterial3D_8hg7t")
+top_radius = 4.0
+bottom_radius = 4.0
+height = 0.2
+
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_n2gaa")
 
@@ -110,10 +121,27 @@ data = SubResource("Resource_j2cqc")
 data = SubResource("Resource_eucu4")
 
 [node name="Spawner" parent="." instance=ExtResource("9_5j028")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
-spawn_interval = 1.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -23)
+spawn_interval = 40.0
 scene = ExtResource("10_wvpry")
+probability = 0.5
+
+[node name="ToxicPuddle" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14)
+script = ExtResource("14_eucu4")
+
+[node name="DangerZone" parent="ToxicPuddle" instance=ExtResource("15_uyenh")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ToxicPuddle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("CylinderMesh_bkfou")
+
+[node name="Timer" type="Timer" parent="ToxicPuddle"]
+autostart = true
 
 [connection signal="item_used" from="ExamplePlayer/Inventory" to="ExamplePlayer" method="_on_inventory_item_used"]
+[connection signal="entity_entered" from="ToxicPuddle/DangerZone" to="ToxicPuddle" method="_on_danger_zone_entity_entered"]
+[connection signal="entity_exited" from="ToxicPuddle/DangerZone" to="ToxicPuddle" method="_on_danger_zone_entity_exited"]
+[connection signal="timeout" from="ToxicPuddle/Timer" to="ToxicPuddle" method="_on_timer_timeout"]
 
 [editable path="ExamplePlayer"]

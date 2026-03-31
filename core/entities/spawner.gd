@@ -5,6 +5,7 @@ class_name Spawner
 @export var is_active:bool=true
 @export var spawn_interval:float=10.0
 @export var scene:PackedScene
+@export var probability:float=1.0
 var spawned_object:Node3D=null
 var player_body:Node3D=null
 var spawner_timer:float=0
@@ -15,6 +16,8 @@ func _ready() -> void:
 	shape.radius=radius
 
 func spawn():
+	if randf()>probability:
+		return
 	if not is_active:
 		return
 	if not player_body:

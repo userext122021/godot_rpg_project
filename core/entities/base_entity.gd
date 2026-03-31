@@ -29,6 +29,7 @@ func _ready() -> void:
 	$MeshInstance3D.mesh=$MeshInstance3D.mesh.duplicate()
 	$CollisionShape3D.shape=$CollisionShape3D.shape.duplicate()
 	stats.data=stats_data.duplicate()
+	stats_data=stats.data
 	pass
 func _physics_process(delta: float) -> void:
 	pass
