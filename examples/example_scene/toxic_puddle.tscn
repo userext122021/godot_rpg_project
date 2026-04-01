@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://craqvbueh1ynv"]
+
+[ext_resource type="PackedScene" uid="uid://1jvn5h23ufor" path="res://core/danger_zone/danger_zone.tscn" id="1_6f2wi"]
+[ext_resource type="Script" uid="uid://c3bwvqqgsk8dg" path="res://examples/example_scene/toxic_puddle.gd" id="2_rl10o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6f2wi"]
+albedo_color = Color(0.39040503, 0.51, 0.16829999, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_rl10o"]
+material = SubResource("StandardMaterial3D_6f2wi")
+top_radius = 4.0
+bottom_radius = 4.0
+height = 0.2
+
+[node name="ToxicPuddle" instance=ExtResource("1_6f2wi")]
+script = ExtResource("2_rl10o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("CylinderMesh_rl10o")
