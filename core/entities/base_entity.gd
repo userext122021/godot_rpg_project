@@ -24,6 +24,8 @@ var is_attacking:bool=false
 var is_walk_attacking:bool=false
 var is_run_attacking:bool=false
 var is_jump_attacking:bool=false
+var is_knockback:bool=false
+var knockback_timer:float=0
 
 func _ready() -> void:
 	$MeshInstance3D.mesh=$MeshInstance3D.mesh.duplicate()
@@ -32,6 +34,11 @@ func _ready() -> void:
 	stats_data=stats.data
 	pass
 func _physics_process(delta: float) -> void:
+	if is_knockback:
+		knockback_timer-=delta
+		move_and_slide()
+		if knockback_timer<=0:
+			is_knockback=false
 	pass
 	
 func set_state(new_state:State):
@@ -73,6 +80,17 @@ func take_hit(weapon_data:WeaponData,attacker_position:Vector3) -> float:
 	var total_damage:float=take_damage(weapon_data.damage,weapon_data.damage_type)
 	if weapon_data.adv_damage>0:
 		total_damage+=take_damage(weapon_data.adv_damage,weapon_data.adv_damage_type)
+
+	# Применяем физику отталкивания
+	if weapon_data.knockback_force > 0 and stats.data.mass > 0:
+		var knock_dir = (global_position - attacker_position).normalized()
+		knock_dir.y = 0 
+		
+		# Формула: Сила / Масса (Второй закон Ньютона в упрощении)
+		var force = weapon_data.knockback_force / stats.data.mass
+		velocity += knock_dir * force
+		is_knockback=true
+		knockback_timer=stats.data.knockback_time
 	return total_damage
 
 
