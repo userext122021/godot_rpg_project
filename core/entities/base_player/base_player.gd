@@ -98,4 +98,4 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	update_state()
-	stats.update(delta)
+	
