@@ -80,7 +80,7 @@ func move_to_target(delta: float):
 
 	
 func move_direct_to_target(delta: float):
-	speed=stats.data.speed
+	var speed=stats.data.speed
 	if global_position.distance_to(target_position)<minimal_distance:
 		return
 		

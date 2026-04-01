@@ -32,6 +32,8 @@ metadata/_custom_type_script = "uid://cfm5bwss6j1sn"
 script = ExtResource("2_vx6j6")
 entity_name = "player"
 entity_category = "player"
+regen_hp_per_second = 1.0
+regen_stamina_per_second = 1.0
 metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvpry"]
@@ -117,7 +119,7 @@ scene = ExtResource("10_wvpry")
 probability = 0.5
 
 [node name="ToxicPuddle" parent="." instance=ExtResource("14_uyenh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, -8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 4)
 
 [connection signal="item_used" from="ExamplePlayer/Inventory" to="ExamplePlayer" method="_on_inventory_item_used"]
 

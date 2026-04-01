@@ -121,6 +121,12 @@ func _on_use_button_pressed() -> void:
 
 
 func update_stats():
+	if player_stats.has_effect("poison"):
+		var sb:StyleBoxFlat=$Stats/HpProgressBar.get_theme_stylebox("fill")
+		sb.bg_color=Color(0.221, 0.326, 0.109, 1.0)
+	else:
+		var sb:StyleBoxFlat=$Stats/HpProgressBar.get_theme_stylebox("fill")
+		sb.bg_color=Color(0.4, 0.129, 0.129, 1.0)
 	$Stats/HpProgressBar.max_value=player_stats.data.max_hp
 	$Stats/HpProgressBar.value=player_stats.data.hp
 	$Stats/StaminaProgressBar.max_value=player_stats.data.max_stamina

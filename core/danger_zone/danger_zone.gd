@@ -7,8 +7,7 @@ signal entity_exited(zone_type:String,entity:BaseEntity)
 var entities=[]
 @export var size:Vector3=Vector3(4,4,4)
 @export var zone_type:String="unknown"
-@export var update_interval:float=3.0
-@export var damage:float=7.0
+@export var update_interval:float=0.5
 var update_timer:float=0
 func _ready() -> void:
 	pass
