@@ -9,8 +9,8 @@ class_name StatsData
 @export var max_hp:float=100
 @export var tmp_hp:float=0
 @export var tmp_stamina:float=0
-@export var regen_hp_per_second:float=1
-@export var regen_stamina_per_second:float=1
+@export var regen_hp_per_second:float=0.0
+@export var regen_stamina_per_second:float=0.0
 @export var max_stamina:float=50
 @export var hp:float=100.0
 @export var stamina:float=50.0
