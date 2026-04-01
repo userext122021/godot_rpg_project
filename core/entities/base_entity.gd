@@ -126,3 +126,5 @@ func update_animations():
 	else:
 		sm.travel("idle") 
 		
+func add_effect(effect_name:String,duration:float,tick_time:float,damage:float):
+	stats.add_effect(effect_name,duration,tick_time,damage)
