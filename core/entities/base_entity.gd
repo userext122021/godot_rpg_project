@@ -39,6 +39,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		if knockback_timer<=0:
 			is_knockback=false
+		return
 	pass
 	
 func set_state(new_state:State):
