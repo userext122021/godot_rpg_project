@@ -70,7 +70,10 @@ func take_damage(damage:float,damage_type:String="physical") -> float:
 
 func take_hit(weapon_data:WeaponData,attacker_position:Vector3) -> float:
 	#process other hit parameters
-	return take_damage(weapon_data.damage,weapon_data.damage_type)
+	var total_damage:float=take_damage(weapon_data.damage,weapon_data.damage_type)
+	if weapon_data.adv_damage>0:
+		total_damage+=take_damage(weapon_data.adv_damage,weapon_data.adv_damage_type)
+	return total_damage
 
 
 func attack():
