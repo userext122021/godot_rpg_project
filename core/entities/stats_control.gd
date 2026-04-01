@@ -8,16 +8,20 @@ signal damage_taken(damage:float)
 var status_timers={}
 var status_total_timers={}
 
+func calculate_damage(damage,damage_type) -> float:
+	return damage
+
 func take_damage(damage:float,damage_type:String="physical") -> float:
 	var new_hp=data.hp
-	new_hp-=damage
+	var final_damage:float=calculate_damage(damage,damage_type)
+	new_hp-=final_damage
+	damage_taken.emit(final_damage)
 	if new_hp<=0:
 		new_hp=0
 		emit_signal("died")
 	data.hp=new_hp	
-	damage_taken.emit(damage)
-	print("DEBUG taking damage ",damage)
-	return damage
+	print("DEBUG taking damage ",final_damage)
+	return final_damage
 	
 func update(delta:float):
 	regen(delta)
