@@ -1,10 +1,12 @@
 extends Node
 class_name StatsControl
 
+
 signal died
 signal damage_taken(damage:float)
-	
 @export var data:StatsData
+
+
 func calculate_damage(damage,damage_type) -> float:
 	return damage
 
