@@ -16,3 +16,6 @@ class_name StatsData
 @export var stamina:float=50.0
 @export var detection_radius:float=20
 @export var statuses:Dictionary
+@export var mass:float=60
+@export var knockback_time:float=0.2
+
