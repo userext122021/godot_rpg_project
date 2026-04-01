@@ -34,6 +34,8 @@ func _ready() -> void:
 	stats_data=stats.data
 	pass
 func _physics_process(delta: float) -> void:
+	stats.update_effects(delta)
+	stats.regen(delta)
 	if is_knockback:
 		knockback_timer-=delta
 		move_and_slide()
