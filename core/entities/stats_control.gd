@@ -36,26 +36,26 @@ func regen(delta):
 		
 func update_effects(delta):
 	var to_delete=[]
-	for key in effects.keys():
-		var e=effects[key]
-		e["tick_timer"]-=delta
-		if e["tick_timer"]<=0:
-			effect_applied.emit(key,e["damage"])
-			take_damage(e["damage"],key)
-			e["tick_timer"]=e["interval"]
-		e["total_timer"]-=delta
-		if e["total_timer"]<=0:
+	for key in effects:
+		var e:Effect=effects[key]
+		e.tick_timer-=delta
+		if e.tick_timer<=0:
+			effect_applied.emit(key,e.damage)
+			take_damage(e.damage,key)
+			e.tick_timer=e.interval
+		e.total_timer-=delta
+		if e.total_timer<=0:
 			to_delete.append(key)
 	for key in to_delete:
 		effects.erase(key)
 			
 func add_effect(effect_name:String,duration:float,tick_time:float,damage:float):
-	var effect={}
-	effect["duration"]=duration
-	effect["interval"]=tick_time
-	effect["total_timer"]=duration
-	effect["tick_timer"]=tick_time
-	effect["damage"]=damage
+	var effect:Effect=Effect.new()
+	effect.duration=duration
+	effect.interval=tick_time
+	effect.total_timer=duration
+	effect.tick_timer=tick_time
+	effect.damage=damage
 	effects[effect_name]=effect
 
 
