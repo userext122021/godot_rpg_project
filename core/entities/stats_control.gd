@@ -4,8 +4,10 @@ class_name StatsControl
 
 signal died
 signal damage_taken(damage:float)
+signal effect_applied(effect_name:String,damage:float)
 @export var data:StatsData
 
+var effects={}
 
 func calculate_damage(damage,damage_type) -> float:
 	return damage
@@ -32,3 +34,32 @@ func regen(delta):
 	if data.stamina<data.max_stamina:
 		data.stamina+=data.regen_stamina_per_second*delta
 		
+func update_effects(delta):
+	var to_delete=[]
+	for key in effects.keys():
+		var e=effects[key]
+		e["tick_timer"]-=delta
+		if e["tick_timer"]<=0:
+			effect_applied.emit(key,e["damage"])
+			take_damage(e["damage"],key)
+			e["tick_timer"]=e["interval"]
+		e["total_timer"]-=delta
+		if e["total_timer"]<=0:
+			to_delete.append(key)
+	for key in to_delete:
+		effects.erase(key)
+			
+func add_effect(effect_name:String,duration:float,tick_time:float,damage:float):
+	var effect={}
+	effect["duration"]=duration
+	effect["interval"]=tick_time
+	effect["total_timer"]=duration
+	effect["tick_timer"]=tick_time
+	effect["damage"]=damage
+	effects[effect_name]=effect
+
+
+func has_effect(effect_name:String) -> bool:
+	if effects.has(effect_name):
+			return true
+	return false
