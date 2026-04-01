@@ -8,7 +8,7 @@ signal damage_taken(damage:float)
 var status_timers={}
 var status_total_timers={}
 
-func take_damage(damage:float) -> float:
+func take_damage(damage:float,damage_type:String="physical") -> float:
 	var new_hp=data.hp
 	new_hp-=damage
 	if new_hp<=0:
