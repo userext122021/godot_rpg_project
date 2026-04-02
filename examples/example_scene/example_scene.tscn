@@ -118,7 +118,7 @@ shape = SubResource("BoxShape3D_vx6j6")
 
 [node name="Spawner" parent="." instance=ExtResource("9_5j028")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -23)
-spawn_interval = 40.0
+radius = 100.0
 scene = ExtResource("10_wvpry")
 probability = 0.5
 
