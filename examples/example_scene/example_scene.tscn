@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bh5jh50ap76ej"]
+[gd_scene load_steps=27 format=3 uid="uid://bh5jh50ap76ej"]
 
 [ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://core/entities/stats_data.gd" id="2_vx6j6"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dixyvmip4sn7o" path="res://debug/debug_enemy.tscn" id="10_wvpry"]
 [ext_resource type="PackedScene" uid="uid://djphclfgekh58" path="res://examples/example_scene/example_player.tscn" id="11_kwhvy"]
 [ext_resource type="Script" uid="uid://cfm5bwss6j1sn" path="res://core/pickable/pickable_data.gd" id="11_wvpry"]
+[ext_resource type="PackedScene" uid="uid://craqvbueh1ynv" path="res://examples/example_scene/toxic_puddle.tscn" id="14_uyenh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wh25s"]
 
@@ -31,6 +32,8 @@ metadata/_custom_type_script = "uid://cfm5bwss6j1sn"
 script = ExtResource("2_vx6j6")
 entity_name = "player"
 entity_category = "player"
+regen_hp_per_second = 1.0
+regen_stamina_per_second = 1.0
 metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wvpry"]
@@ -110,9 +113,13 @@ data = SubResource("Resource_j2cqc")
 data = SubResource("Resource_eucu4")
 
 [node name="Spawner" parent="." instance=ExtResource("9_5j028")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7)
-spawn_interval = 1.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -23)
+spawn_interval = 40.0
 scene = ExtResource("10_wvpry")
+probability = 0.5
+
+[node name="ToxicPuddle" parent="." instance=ExtResource("14_uyenh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 4)
 
 [connection signal="item_used" from="ExamplePlayer/Inventory" to="ExamplePlayer" method="_on_inventory_item_used"]
 

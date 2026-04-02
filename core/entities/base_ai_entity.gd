@@ -8,7 +8,7 @@ signal entity_exited(body:Node3D)
 @onready var nav_agent: NavigationAgent3D = $NavigationAgent3D
 @export var target_position: Vector3
 @export var minimal_distance: float = 1.5
-@export var speed: float = 3.0
+#@export var speed: float = 3.0
 @export var ai:BaseAI
 var is_target_reached:bool=false
 func _ready() -> void:
@@ -20,6 +20,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
+	if is_knockback:
+		return
 	# 1. Применяем гравитацию
 	if not is_on_floor():
 		velocity.y += get_gravity().y * delta
@@ -78,7 +80,7 @@ func move_to_target(delta: float):
 
 	
 func move_direct_to_target(delta: float):
-	speed=stats.data.speed
+	var speed=stats.data.speed
 	if global_position.distance_to(target_position)<minimal_distance:
 		return
 		
@@ -100,8 +102,8 @@ func rotate_towards_position(pos:Vector3, delta: float):
 	rotation.y =  lerp_angle(global_rotation.y, $Pivot.global_rotation.y, stats_data.rotation_speed*delta)
 		
 func stop_moving():
-	velocity.x = move_toward(velocity.x, 0, speed)
-	velocity.z = move_toward(velocity.z, 0, speed)
+	velocity.x = move_toward(velocity.x, 0, stats.data.speed)
+	velocity.z = move_toward(velocity.z, 0, stats.data.speed)
 	is_walking = false
 
 
