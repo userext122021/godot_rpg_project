@@ -57,7 +57,7 @@ func spawn():
 func _on_body_entered(body: Node3D) -> void:
 	if not is_active:
 		return
-	print("Body entered ",body)
+	#print("Body entered ",body)
 	if body.has_node("StatsControl"):
 		var sc:StatsControl=body.get_node("StatsControl")
 		if sc.data.entity_category=="player":
