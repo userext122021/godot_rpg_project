@@ -1,0 +1,45 @@
+[gd_scene load_steps=12 format=3 uid="uid://bcjgh4bb0hugi"]
+
+[ext_resource type="PackedScene" uid="uid://c06jgtxu05wfo" path="res://core/entities/base_ai_entity.tscn" id="1_kqju1"]
+[ext_resource type="Script" uid="uid://cc02jrlh5ytm1" path="res://core/entities/base_npc/base_npc.gd" id="2_6yhtx"]
+[ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://core/entities/stats_data.gd" id="2_bu8p8"]
+[ext_resource type="PackedScene" uid="uid://clfg4conuoaed" path="res://core/entities/base_npc/base_npc_ai.tscn" id="3_xun26"]
+[ext_resource type="PackedScene" uid="uid://dsolwjgdf1gac" path="res://core/controls/interactable.tscn" id="4_pkxna"]
+[ext_resource type="Script" uid="uid://d02ghumma662r" path="res://core/controls/interactable_data.gd" id="5_6yhtx"]
+[ext_resource type="PackedScene" uid="uid://bas0tjvly4qn0" path="res://core/entities/base_npc/dialog/dialog_control.tscn" id="7_pq2ws"]
+
+[sub_resource type="Resource" id="Resource_pkxna"]
+script = ExtResource("2_bu8p8")
+entity_name = "base_npc"
+entity_category = "npc"
+metadata/_custom_type_script = "uid://bwgfc7v7io1hh"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bu8p8"]
+albedo_color = Color(0.2788, 0.57301337, 0.68, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_xun26"]
+material = SubResource("StandardMaterial3D_bu8p8")
+
+[sub_resource type="Resource" id="Resource_pq2ws"]
+script = ExtResource("5_6yhtx")
+interactable_name = "base_npc_interactable"
+interactable_category = "npc_interactable"
+interaction_text = "E - talk"
+metadata/_custom_type_script = "uid://d02ghumma662r"
+
+[node name="BaseNPC" node_paths=PackedStringArray("ai") instance=ExtResource("1_kqju1")]
+script = ExtResource("2_6yhtx")
+dialog_file_path = "res://core/entities/base_npc/dialog/base_dialog.csv"
+ai = NodePath("BaseNPCAI")
+stats_data = SubResource("Resource_pkxna")
+
+[node name="MeshInstance3D" parent="." index="0"]
+mesh = SubResource("CapsuleMesh_xun26")
+
+[node name="BaseNPCAI" parent="." index="7" instance=ExtResource("3_xun26")]
+
+[node name="Interactable" parent="." index="8" instance=ExtResource("4_pkxna")]
+interact_text = "E - talk"
+data = SubResource("Resource_pq2ws")
+
+[node name="DialogControl" parent="." index="9" instance=ExtResource("7_pq2ws")]

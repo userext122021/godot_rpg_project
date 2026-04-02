@@ -22,6 +22,11 @@ func get_category() -> String:
 	if not data:
 		return "unknown"
 	return data.interactable_category
+
+func get_interactable_name() -> String:
+	if not data:
+		return "unknown"
+	return data.interactable_name
 	
 func interact(body: Node3D):
 	interacted.emit(body)

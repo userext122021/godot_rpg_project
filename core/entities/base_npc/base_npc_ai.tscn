@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://clfg4conuoaed"]
+
+[ext_resource type="PackedScene" uid="uid://60uax6mdioib" path="res://core/entities/base_ai.tscn" id="1_60evx"]
+[ext_resource type="Script" uid="uid://bfyla7jdeldau" path="res://core/entities/base_npc/base_npc_ai.gd" id="2_espfu"]
+
+[node name="BaseNPCAI" instance=ExtResource("1_60evx")]
+script = ExtResource("2_espfu")

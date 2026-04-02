@@ -10,9 +10,5 @@ script = ExtResource("1_snt61")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_snt61")
 
-[node name="Timer" type="Timer" parent="."]
-autostart = true
-
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

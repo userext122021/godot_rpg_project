@@ -5,11 +5,12 @@ signal show_inventory
 signal interaction_started
 
 
-
+@export var interaction_interval:float=0.2
+var interaction_timer:float=0
 var mouse_sensitivity:float=0.002
 @onready var camera = $CameraPivot/Camera3D
-
 var interactable:Interactable=null
+var interactable_body:Node3D
 var current_workstation:String="none"
 
 func _ready():
@@ -29,25 +30,34 @@ func _unhandled_input(event):
 		camera.rotation.x = clamp(camera.rotation.x, -max_rotation_x, max_rotation_x)
 
 func check_interaction(delta):
+	interaction_timer-=delta
+	if interaction_timer>0:
+		return
+	interaction_timer=interaction_interval	
 	if $InteractRay.is_colliding():
+		#print($InteractRay.get_collider())
 		var i_body:Node3D=$InteractRay.get_collider()
 		if i_body:
 			if i_body.has_node("Interactable"):
 				var i:Interactable=i_body.get_node("Interactable")
 				interactable=i
+				interactable_body=i_body
 				$InteractRay/Label3D.text=i.get_interaction_text()
 				$InteractRay/Label3D.show()
+				return
 			
-	else:
-		interactable=null
-		if $InteractRay/Label3D.visible:
-			$InteractRay/Label3D.hide()
+	
+	interactable=null
+	interactable_body=null
+	if $InteractRay/Label3D.visible:
+		$InteractRay/Label3D.hide()
 	pass
 	
 func interact():
 	if interactable==null:
 		return
-	current_workstation=interactable.get_category()
+	if interactable.get_category()=="workstation":
+		current_workstation=interactable.get_interactable_name()
 	interactable.interact(self)
 	interaction_started.emit()
 	
@@ -60,10 +70,12 @@ func _physics_process(delta):
 		is_jumping=false
 		#unset_state(State.JUMP)
 	
-	if $InteractRay.is_colliding():
-		check_interaction(delta)
+	#if $InteractRay.is_colliding():
+	check_interaction(delta)
 	if Input.is_action_just_pressed("interact"):
-		interact()
+		if not is_interaction:
+			interact()
+			#is_interaction=true
 	if Input.is_action_just_pressed("show_inventory"):
 		show_inventory.emit()
 	

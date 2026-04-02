@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://bsd5yf6gcvxo"
+
+[deps]
+
+files=["res://core/entities/base_npc/dialog/base_dialog.id.translation", "res://core/entities/base_npc/dialog/base_dialog.group.translation", "res://core/entities/base_npc/dialog/base_dialog.level.translation", "res://core/entities/base_npc/dialog/base_dialog.type.translation", "res://core/entities/base_npc/dialog/base_dialog.text.translation", "res://core/entities/base_npc/dialog/base_dialog.next.translation", "res://core/entities/base_npc/dialog/base_dialog.ext.translation"]
+
+source_file="res://core/entities/base_npc/dialog/base_dialog.csv"
+dest_files=["res://core/entities/base_npc/dialog/base_dialog.id.translation", "res://core/entities/base_npc/dialog/base_dialog.group.translation", "res://core/entities/base_npc/dialog/base_dialog.level.translation", "res://core/entities/base_npc/dialog/base_dialog.type.translation", "res://core/entities/base_npc/dialog/base_dialog.text.translation", "res://core/entities/base_npc/dialog/base_dialog.next.translation", "res://core/entities/base_npc/dialog/base_dialog.ext.translation"]
+
+[params]
+
+compress=true
+delimiter=0

@@ -25,6 +25,7 @@ var is_walk_attacking:bool=false
 var is_run_attacking:bool=false
 var is_jump_attacking:bool=false
 var is_knockback:bool=false
+var is_interaction:bool=false
 var knockback_timer:float=0
 
 func _ready() -> void:
