@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1pyrlgd5n7j6"]
+[gd_scene load_steps=6 format=3 uid="uid://d1pyrlgd5n7j6"]
 
+[ext_resource type="Theme" uid="uid://cptfut006jed4" path="res://core/ui/main_theme.tres" id="1_go6ch"]
 [ext_resource type="Script" uid="uid://dh3gw8cg4vxha" path="res://core/ui/ui.gd" id="1_nb4k0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gje2l"]
@@ -26,6 +27,9 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_20mfd"]
+bg_color = Color(0.33, 0.33, 0.33, 0.08235294)
+
 [node name="Ui" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -34,7 +38,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_go6ch")
 script = ExtResource("1_nb4k0")
+
+[node name="Stats" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -84.0
+offset_right = 300.0
+grow_vertical = 0
+
+[node name="HpProgressBar" type="ProgressBar" parent="Stats"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_styles/fill = SubResource("StyleBoxFlat_gje2l")
+show_percentage = false
+
+[node name="StaminaProgressBar" type="ProgressBar" parent="Stats"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_styles/fill = SubResource("StyleBoxFlat_go6ch")
+show_percentage = false
 
 [node name="MainWindow" type="VBoxContainer" parent="."]
 visible = false
@@ -125,29 +153,50 @@ theme_override_font_sizes/font_size = 24
 text = "Exit
 "
 
-[node name="Stats" type="VBoxContainer" parent="."]
+[node name="DialogWindow" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
-anchors_preset = 2
+anchors_preset = 12
 anchor_top = 1.0
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -27.0
-offset_right = 200.0
+offset_top = -587.0
+grow_horizontal = 2
 grow_vertical = 0
+size_flags_vertical = 6
+theme = ExtResource("1_go6ch")
 
-[node name="HpProgressBar" type="ProgressBar" parent="Stats"]
-custom_minimum_size = Vector2(300, 40)
+[node name="Header" type="Label" parent="DialogWindow"]
 layout_mode = 2
 size_flags_vertical = 10
-theme_override_styles/fill = SubResource("StyleBoxFlat_gje2l")
-show_percentage = false
+theme = ExtResource("1_go6ch")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_20mfd")
+text = "Dialog with"
 
-[node name="StaminaProgressBar" type="ProgressBar" parent="Stats"]
-custom_minimum_size = Vector2(300, 40)
+[node name="NpcLine" type="Label" parent="DialogWindow"]
 layout_mode = 2
-size_flags_vertical = 10
-theme_override_styles/fill = SubResource("StyleBoxFlat_go6ch")
-show_percentage = false
+size_flags_vertical = 8
+theme = ExtResource("1_go6ch")
+theme_override_font_sizes/font_size = 32
+text = "npc_line
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PlayerLines" type="ItemList" parent="DialogWindow"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("1_go6ch")
+auto_width = true
+auto_height = true
+
+[node name="Answer" type="Button" parent="DialogWindow"]
+layout_mode = 2
+theme = ExtResource("1_go6ch")
+text = "Answer"
 
 [connection signal="pressed" from="MainWindow/HBoxContainer/InventoryWindow/ButtonsContainer/UseButton" to="." method="_on_use_button_pressed"]
 [connection signal="pressed" from="MainWindow/HBoxContainer/CraftWindow/ButtonsContainer/CraftButton" to="." method="_on_craft_button_pressed"]
 [connection signal="pressed" from="MainWindow/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="DialogWindow/Answer" to="." method="_on_answer_pressed"]

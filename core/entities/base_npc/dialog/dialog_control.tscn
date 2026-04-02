@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bas0tjvly4qn0"]
+
+[ext_resource type="Script" uid="uid://ca2x3silsq6fm" path="res://core/entities/base_npc/dialog/dialog_control.gd" id="1_v8qcu"]
+
+[node name="DialogControl" type="Node"]
+script = ExtResource("1_v8qcu")

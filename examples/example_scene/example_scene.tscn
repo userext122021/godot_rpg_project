@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bh5jh50ap76ej"]
+[gd_scene load_steps=28 format=3 uid="uid://bh5jh50ap76ej"]
 
 [ext_resource type="Script" uid="uid://q7fccvffph2x" path="res://examples/example_scene/example_scene.gd" id="1_n2gaa"]
 [ext_resource type="Script" uid="uid://bwgfc7v7io1hh" path="res://core/entities/stats_data.gd" id="2_vx6j6"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://djphclfgekh58" path="res://examples/example_scene/example_player.tscn" id="11_kwhvy"]
 [ext_resource type="Script" uid="uid://cfm5bwss6j1sn" path="res://core/pickable/pickable_data.gd" id="11_wvpry"]
 [ext_resource type="PackedScene" uid="uid://craqvbueh1ynv" path="res://examples/example_scene/toxic_puddle.tscn" id="14_uyenh"]
+[ext_resource type="PackedScene" uid="uid://bcjgh4bb0hugi" path="res://core/entities/base_npc/base_npc.tscn" id="15_eucu4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wh25s"]
 
@@ -45,6 +46,17 @@ cooldown_time = 0.2
 attack_time = 0.2
 metadata/_custom_type_script = "uid://dsyhdks3kftvo"
 
+[sub_resource type="Resource" id="Resource_j2cqc"]
+script = ExtResource("8_kwhvy")
+hp = null
+metadata/_custom_type_script = "uid://nfvghq4yke8r"
+
+[sub_resource type="Resource" id="Resource_eucu4"]
+script = ExtResource("10_ff2r5")
+interactable_name = "workbench"
+interactable_category = "workstation"
+metadata/_custom_type_script = "uid://d02ghumma662r"
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_wvpry"]
 vertices = PackedVector3Array(-31.5, 0.5, 9, -1, 0.5, 9, -0.75, 0.5, 8, 0.25, 0.5, -31.5, -31.5, 0.5, -31.5, 0.25, 0.5, 8, 1, 0.5, 8, 1.25, 0.5, 9, 31.5, 0.5, 9, 31.5, 0.5, -31.5, 0, 0.5, 31.5, 0, 0.5, 10.25, -1, 0.5, 10, -31.5, 0.5, 31.5, 0.75, 0.5, 10.25, 31.5, 0.5, 31.5)
 polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 4), PackedInt32Array(2, 4, 3), PackedInt32Array(3, 5, 2), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 6, 9), PackedInt32Array(9, 6, 3), PackedInt32Array(6, 5, 3), PackedInt32Array(11, 10, 12), PackedInt32Array(12, 10, 13), PackedInt32Array(12, 13, 0), PackedInt32Array(0, 1, 12), PackedInt32Array(10, 11, 14), PackedInt32Array(14, 7, 10), PackedInt32Array(10, 7, 8), PackedInt32Array(10, 8, 15)]
@@ -54,17 +66,6 @@ size = Vector2(64, 64)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vx6j6"]
 size = Vector3(64, 1, 64)
-
-[sub_resource type="Resource" id="Resource_j2cqc"]
-script = ExtResource("8_kwhvy")
-hp = null
-metadata/_custom_type_script = "uid://nfvghq4yke8r"
-
-[sub_resource type="Resource" id="Resource_eucu4"]
-script = ExtResource("10_ff2r5")
-interactable_name = "workbench"
-interactable_category = "workbench"
-metadata/_custom_type_script = "uid://d02ghumma662r"
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_n2gaa")
@@ -90,8 +91,18 @@ stats_data = SubResource("Resource_ff2r5")
 [node name="CollisionShape3D" parent="ExamplePlayer" index="1"]
 shape = SubResource("CapsuleShape3D_wvpry")
 
+[node name="InteractRay" parent="ExamplePlayer" index="5"]
+target_position = Vector3(0, -0.2, -2)
+
 [node name="BaseWeapon" parent="ExamplePlayer" index="7"]
 data = SubResource("Resource_uyenh")
+
+[node name="Workbench" parent="." instance=ExtResource("4_3wino")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+data = SubResource("Resource_j2cqc")
+
+[node name="Interactable" parent="Workbench" instance=ExtResource("5_k3qqm")]
+data = SubResource("Resource_eucu4")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_wvpry")
@@ -105,13 +116,6 @@ mesh = SubResource("PlaneMesh_1kmlx")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 shape = SubResource("BoxShape3D_vx6j6")
 
-[node name="Workbench" parent="NavigationRegion3D" instance=ExtResource("4_3wino")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
-data = SubResource("Resource_j2cqc")
-
-[node name="Interactable" parent="NavigationRegion3D/Workbench" instance=ExtResource("5_k3qqm")]
-data = SubResource("Resource_eucu4")
-
 [node name="Spawner" parent="." instance=ExtResource("9_5j028")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, -23)
 spawn_interval = 40.0
@@ -120,6 +124,9 @@ probability = 0.5
 
 [node name="ToxicPuddle" parent="." instance=ExtResource("14_uyenh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 4)
+update_interval = 0.2
+
+[node name="BaseNPC" parent="." instance=ExtResource("15_eucu4")]
 
 [connection signal="item_used" from="ExamplePlayer/Inventory" to="ExamplePlayer" method="_on_inventory_item_used"]
 

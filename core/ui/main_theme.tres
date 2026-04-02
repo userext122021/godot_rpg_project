@@ -1,0 +1,56 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cptfut006jed4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_31pgu"]
+bg_color = Color(0.18, 0.18, 0.18, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhn3v"]
+bg_color = Color(0.16924527, 0.16924533, 0.16924518, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w3hw"]
+bg_color = Color(0.26475334, 0.26475334, 0.26475322, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i0p2n"]
+bg_color = Color(0.19614309, 0.19614312, 0.19614297, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gibwh"]
+bg_color = Color(0.33101895, 0.33101895, 0.33101884, 1)
+
+[resource]
+Button/font_sizes/font_size = 32
+Button/styles/disabled = SubResource("StyleBoxFlat_31pgu")
+Button/styles/focus = SubResource("StyleBoxFlat_bhn3v")
+Button/styles/normal = SubResource("StyleBoxFlat_0w3hw")
+ItemList/colors/font_color = Color(0.9, 0.9, 0.9, 1)
+ItemList/colors/font_hovered_color = Color(0, 0, 0, 1)
+ItemList/colors/font_hovered_selected_color = Color(0, 0, 0, 1)
+ItemList/colors/font_outline_color = Color(0, 0, 0, 1)
+ItemList/colors/font_selected_color = Color(0, 0, 0, 1)
+ItemList/colors/guide_color = Color(0, 0, 0, 1)
+ItemList/constants/h_separation = 0
+ItemList/constants/icon_margin = 0
+ItemList/constants/line_separation = 0
+ItemList/constants/outline_size = 0
+ItemList/constants/v_separation = 0
+ItemList/font_sizes/font_size = 32
+ItemList/fonts/font = null
+ItemList/styles/cursor = null
+ItemList/styles/cursor_unfocused = null
+ItemList/styles/focus = null
+ItemList/styles/hovered = null
+ItemList/styles/hovered_selected = null
+ItemList/styles/hovered_selected_focus = null
+ItemList/styles/panel = SubResource("StyleBoxFlat_i0p2n")
+ItemList/styles/selected = null
+ItemList/styles/selected_focus = null
+Label/colors/font_color = Color(0.8496211, 0.8496211, 0.8496211, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+Label/constants/line_spacing = 0
+Label/constants/outline_size = 0
+Label/constants/shadow_offset_x = 0
+Label/constants/shadow_offset_y = 0
+Label/constants/shadow_outline_size = 0
+Label/font_sizes/font_size = 16
+Label/fonts/font = null
+Label/styles/focus = null
+Label/styles/normal = SubResource("StyleBoxFlat_gibwh")
