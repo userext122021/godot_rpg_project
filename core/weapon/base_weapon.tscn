@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cf11hx406ss10"]
+
+[ext_resource type="Script" uid="uid://olrxhfdmqy3f" path="res://core/weapon/base_weapon.gd" id="1_a0172"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_l3xq3"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="BaseWeapon" type="Node3D"]
+script = ExtResource("1_a0172")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, -0.1, -2)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RayCast3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -1.9)
+mesh = SubResource("BoxMesh_l3xq3")

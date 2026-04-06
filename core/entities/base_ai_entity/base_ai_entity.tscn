@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://da13r2fppk2h4"]
+
+[ext_resource type="PackedScene" uid="uid://ddogphajaj252" path="res://core/entities/base_entity.tscn" id="1_kqrda"]
+[ext_resource type="Script" uid="uid://c3v41gdou2f1p" path="res://core/entities/base_ai_entity/base_ai_entity.gd" id="2_g70w0"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_g70w0"]
+
+[node name="BaseAIEntity" instance=ExtResource("1_kqrda")]
+script = ExtResource("2_g70w0")
+detection_radius = 10.0
+
+[node name="Area3D" type="Area3D" parent="." index="2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_g70w0")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

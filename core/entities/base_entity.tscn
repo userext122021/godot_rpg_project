@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddogphajaj252"]
+
+[ext_resource type="Script" uid="uid://dme0v2js2fpjh" path="res://core/entities/base_entity.gd" id="1_eor4q"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_27fdg"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_27fdg"]
+
+[node name="BaseEntity" type="CharacterBody3D"]
+script = ExtResource("1_eor4q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_27fdg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_27fdg")

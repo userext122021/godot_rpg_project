@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://05p4s7eca1wb"]
+
+[ext_resource type="Script" uid="uid://bisjikmvajaiw" path="res://core/entities/base_ai_entity/base_ai.gd" id="1_4jjhl"]
+
+[node name="BaseAI" type="Node"]
+script = ExtResource("1_4jjhl")
