@@ -6,10 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://dsxs2cqbrc6me" path="res://test/base_test_scene/weapon/test_club.tscn" id="6_rupur"]
 [ext_resource type="PackedScene" uid="uid://dkj771scai1lw" path="res://test/base_test_scene/weapon/test_pistol.tscn" id="7_5813v"]
 
-[node name="TestPlayer" instance=ExtResource("1_kw3ox")]
+[node name="TestPlayer" node_paths=PackedStringArray("weapon") instance=ExtResource("1_kw3ox")]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_pw7be")
+max_hp = 100.0
+weapon = NodePath("base_character/Armature/Skeleton3D/mixamorig_RightHandIndex1/weapon_marker/MeleeWeapon")
+knockingback_interval = 0.4
 
 [node name="Skeleton3D" parent="base_character/Armature" index="0"]
 bones/0/position = Vector3(0, 1.0212751e-14, -109.99437)
@@ -89,9 +92,13 @@ transform = Transform3D(-0.0041424986, -0.9999914, -7.0180977e-07, 0.9944399, -0
 [node name="MeleeWeapon" parent="base_character/Armature/Skeleton3D/mixamorig_RightHandIndex1/weapon_marker" index="0" instance=ExtResource("6_rupur")]
 transform = Transform3D(-0.99999976, 9.981306e-08, -5.339172e-08, 7.073748e-08, 0.99999976, 3.725291e-08, 5.5031997e-08, 1.0430818e-07, -1.0000005, -0.030920088, 0.026179671, 0.013180962)
 visible = false
+knockback_force = 35.0
+cooldown_interval = 1.0
 
 [node name="RangedWeapon" parent="base_character/Armature/Skeleton3D/mixamorig_RightHandIndex1/weapon_marker" index="1" instance=ExtResource("7_5813v")]
 transform = Transform3D(-0.9999996, 9.614506e-08, 5.9744835e-08, 8.3854694e-08, 0.49999967, 0.8660257, 2.9031652e-08, 0.8660253, -0.5, -0.030920208, 0.026179671, 0.11318101)
+damage = 4.0
+knockback_force = 15.0
 is_ranged = true
 range = 20.0
 

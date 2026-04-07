@@ -4,12 +4,13 @@ var max_count:int=3
 var counter:int=0
 @export var enemy_scene:PackedScene
 var timer:float=0
-var max_time:float=15
+var max_time:float=10
 @onready var player:BasePlayer=$TestPlayer
 
 func _ready() -> void:
 	player.tree_exited.connect(on_player_died)
-
+	timer=randf()*max_time
+	
 func on_player_died():
 	if get_tree():
 		get_tree().quit()
@@ -26,8 +27,9 @@ func spawn():
 	if not enemy_scene:
 		return
 	var pos:Vector3
-	pos.x=randf()*20.0
-	pos.z=randf()*20.0
+	pos.x=randf()*20.0-10
+	pos.z=randf()*20.0-10
+	
 	pos.y=1
 	var enemy:BaseEnemy=enemy_scene.instantiate()
 	enemy.process_mode=Node.PROCESS_MODE_DISABLED

@@ -16,9 +16,12 @@ func _ready() -> void:
 	ai.init_ai()
 	var shape:CylinderShape3D=$Area3D/CollisionShape3D.shape
 	shape.radius=detection_radius
-	
-func rotate_to_target(delta:float):
-	var dir=global_position.direction_to(ai.target)
+
+func get_next_point() -> Vector3:
+	return ai.target
+		
+func rotate_to_point(point:Vector3,delta:float):
+	var dir=global_position.direction_to(point)
 	#print("DEBUG: dir",dir)
 	var angle=-atan2(dir.z,dir.x)-PI/2.0
 	rotation.y=lerp_angle(rotation.y,angle,rotation_speed*delta)
@@ -35,8 +38,9 @@ func _physics_process(delta: float) -> void:
 		if global_position.distance_to(ai.target)<ai.minimal_distance:
 			ai.is_target_reached=true
 			is_moving=false
-		else:	
-			rotate_to_target(delta)
+		else:
+			var next_point:Vector3=get_next_point()	
+			rotate_to_point(next_point,delta)
 			#print("DEBUG: angle ",180.0*angle/PI)
 			velocity.x=-basis.z.x*speed
 			velocity.z=-basis.z.z*speed
@@ -44,7 +48,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		is_moving=false
 	if is_attacking:
-		rotate_to_target(delta)
+		rotate_to_point(ai.target,delta)
 	
 	if not is_moving:		
 		var vy=velocity.y

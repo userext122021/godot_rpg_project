@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpguqncvbmkx2"]
+
+[ext_resource type="Script" uid="uid://cknq05f0s7lvt" path="res://core/spawner/base_spawner.gd" id="1_nusuy"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_q7li1"]
+
+[node name="BaseSpawner" type="Area3D"]
+script = ExtResource("1_nusuy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_q7li1")

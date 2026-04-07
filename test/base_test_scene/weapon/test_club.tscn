@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://cf11hx406ss10" path="res://core/weapon/base_weapon.tscn" id="1_xgrpv"]
 
 [node name="TestClub" instance=ExtResource("1_xgrpv")]
+preparing_interval = 0.59
+attacking_interval = 0.08
 
 [node name="RayCast3D" parent="." index="0"]
 collision_mask = 4
