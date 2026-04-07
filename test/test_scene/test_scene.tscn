@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2kdvtvcd2b6j"]
+
+[ext_resource type="PackedScene" uid="uid://6hs4q7gqlkvo" path="res://test/base_test_scene/base_test_scene.tscn" id="1_r7qtk"]
+[ext_resource type="PackedScene" uid="uid://nfkq1v6rhxve" path="res://core/entities/base_player/base_player.tscn" id="2_ld8i6"]
+[ext_resource type="PackedScene" uid="uid://cf11hx406ss10" path="res://core/weapon/base_weapon.tscn" id="3_tbiya"]
+[ext_resource type="PackedScene" uid="uid://ojd7e3gdbl1f" path="res://core/entities/base_enemy/base_enemy.tscn" id="4_dolt4"]
+
+[node name="TestScene" instance=ExtResource("1_r7qtk")]
+
+[node name="BasePlayer" parent="." index="3" node_paths=PackedStringArray("weapon") instance=ExtResource("2_ld8i6")]
+mouse_sensitivity = 0.002
+entity_type = "unknown"
+speed = 5.0
+walking_speed = 5.0
+running_speed = 15.0
+jump_velocity = 4.5
+rotation_speed = 3.0
+hp = 20.0
+weapon = NodePath("BaseWeapon")
+friction = 100.0
+knockingback_interval = 0.2
+
+[node name="BaseWeapon" parent="BasePlayer" index="3" instance=ExtResource("3_tbiya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.5)
+knockback_force = 15.0
+
+[node name="BaseEnemy" parent="." index="4" node_paths=PackedStringArray("weapon") instance=ExtResource("4_dolt4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+weapon = NodePath("BaseWeapon")
+
+[node name="BaseWeapon" parent="BaseEnemy" index="3" instance=ExtResource("3_tbiya")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -0.6)

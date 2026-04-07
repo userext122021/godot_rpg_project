@@ -1,27 +1,42 @@
 extends BaseAI
-var player_body:BaseEntity
-
-func _ready() -> void:
-	super._ready()
-	body.ai=self
-	print("DEBUG: base AI ready")
-
-func _process(delta: float) -> void:
-	if body.is_target_reached:
-		if body.weapon:
-			body.attack()		
-
-func _on_target_reached():
-	print("DEBUG: base enemy target reached")
-	body.attack()
-
-func _on_entity_entered(e_body:Node3D):
-	var s:StatsControl=e_body.get_node("StatsControl")
-	if s.data.entity_category=="player":
-		player_body=e_body
+class_name BaseEnemyAI
 
 
-func _update(delta):
-	if player_body:
-		body.target_position=player_body.global_position
-	pass
+
+var player_body:BasePlayer=null
+
+func is_player_nerby() -> bool:
+	if not player_body:
+		return false
+	if body.global_position.distance_to(player_body.global_position)<minimal_distance:
+		return true
+	return false
+	
+func update(delta:float):
+	if not is_active:
+		return
+	if not player_body:
+		is_move_to_target=false
+		is_target_reached=false
+		return
+	if not is_player_nerby():
+		is_target_reached=false
+		is_move_to_target=true
+		target=player_body.global_position
+		return
+	if is_target_reached:
+		#print("DEBUG: target is reached")
+		body.attack()
+
+
+func on_entity_entered(e:BaseEntity):
+	super.on_entity_entered(e)
+	if e.entity_type=="player":
+		player_body=e
+		#print("DEBUG: player entered")
+		
+func on_entity_exited(e:BaseEntity):
+	super.on_entity_exited(e)
+	if e==player_body:
+		player_body=null
+		print("DEBUG: player exited")

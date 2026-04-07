@@ -1,0 +1,31 @@
+[gd_scene load_steps=9 format=3 uid="uid://do0f58y8blt0p"]
+
+[ext_resource type="PackedScene" uid="uid://6hs4q7gqlkvo" path="res://test/base_test_scene/base_test_scene.tscn" id="1_f6vpg"]
+[ext_resource type="Script" uid="uid://f14gilwqkyy0" path="res://test/test_animation_scene/test_animation_scene.gd" id="2_wmu0b"]
+[ext_resource type="PackedScene" uid="uid://cayaf0kklgoai" path="res://test/test_animation_scene/enemy.tscn" id="3_wmu0b"]
+[ext_resource type="PackedScene" uid="uid://7dnsn55do1h5" path="res://test/base_test_scene/test_player.tscn" id="5_wmu0b"]
+
+[sub_resource type="Gradient" id="Gradient_wmu0b"]
+offsets = PackedFloat32Array(0, 0.11486486, 0.21114865, 0.375, 1)
+colors = PackedColorArray(0.4525857, 0.4525857, 0.4525857, 1, 0.7235188, 0.7235188, 0.7235188, 1, 0.71311027, 0.71311027, 0.71311027, 1, 0.62612456, 0.62612456, 0.62612456, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uif1i"]
+frequency = 0.0276
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_47b23"]
+noise = SubResource("FastNoiseLite_uif1i")
+color_ramp = SubResource("Gradient_wmu0b")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lw8du"]
+albedo_color = Color(0.7204674, 0.7204675, 0.7204674, 1)
+albedo_texture = SubResource("NoiseTexture2D_47b23")
+texture_filter = 0
+
+[node name="TestAnimationScene" instance=ExtResource("1_f6vpg")]
+script = ExtResource("2_wmu0b")
+enemy_scene = ExtResource("3_wmu0b")
+
+[node name="MeshInstance3D" parent="Ground" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_lw8du")
+
+[node name="TestPlayer" parent="." index="3" instance=ExtResource("5_wmu0b")]

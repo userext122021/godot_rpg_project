@@ -1,105 +1,192 @@
 extends CharacterBody3D
 class_name BaseEntity
 
-signal state_changed(new_state:State,old_state:State)
-signal entity_died(entity_name:String,entity_category:String)
 
-enum State {IDLE,WALK,RUN,JUMP,EXT}
 
-@onready var stats:StatsControl=$StatsControl
-@export var stats_data:StatsData
-@export var max_rotation_x:float=PI/6
-@export var weapon:BaseWeapon=null
+@export var entity_type:String="unknown"
+@export var speed := 5.0
+@export var walking_speed := 5.0
+@export var running_speed := 15.0
 
-@onready var anim_tree = $AnimationTree
-@onready var anim_state_machine_playback:AnimationNodeStateMachinePlayback = anim_tree.get("parameters/playback")
-
-var current_state:State=State.IDLE
-var ext_state:String="NONE"
-
-var is_walking:bool=false
-var is_running:bool=false
-var is_jumping:bool=false
+@export var jump_velocity := 4.5
+@export var rotation_speed:float=3.0
+@export var hp:float=20
+@export var max_hp:float=20
+@export var regen_hp_per_second:float=1.0
+@export var weapon:BaseWeapon
+#@export var detection_radius:float=10.0
+@export var friction:float=100
+@export var knockingback_interval:float=0.2
+@export var animation_player:AnimationPlayer
+var is_knockingback:bool=false
+var knockback_timer:float=0
 var is_attacking:bool=false
-var is_walk_attacking:bool=false
-var is_run_attacking:bool=false
-var is_jump_attacking:bool=false
+var is_moving:bool=false
+var is_jumping:bool=false
+var is_running:bool=false
+var is_blocking:bool=false
 
-func _ready() -> void:
-	$MeshInstance3D.mesh=$MeshInstance3D.mesh.duplicate()
-	$CollisionShape3D.shape=$CollisionShape3D.shape.duplicate()
-	stats.data=stats_data.duplicate()
-	stats_data=stats.data
-	pass
-func _physics_process(delta: float) -> void:
-	pass
-	
-func set_state(new_state:State):
-	if new_state==current_state:
-		return
-	if current_state==State.IDLE or current_state==State.WALK or current_state==State.RUN:
-		state_changed.emit(new_state,current_state)
-		current_state=new_state
-		return
-	elif current_state==State.JUMP:
-		return
-	pass
+func knock_back(knockback_force:float,weapon_pos:Vector3):
+	print("DEBUG: knockback")
+	var dir:Vector3=global_position.direction_to(weapon_pos)
+	var angle=atan2(dir.z,dir.x)+PI/2.0
+	dir.y=0
+	velocity.x=-dir.x*knockback_force
+	velocity.z=-dir.z*knockback_force
+	is_knockingback=true
+	knockback_timer=knockingback_interval
 
-func unset_state(state:State):
-	if current_state!=state:
-		return
-	state_changed.emit(State.IDLE,state)
-	current_state=State.IDLE	
-	
-func update_state():
-	var new_state:State=State.IDLE
+func can_move() -> bool:
+	if is_attacking:
+		return false
+	return true
+func can_jump():
+	if is_attacking:
+		return false
+	if is_on_floor():
+		return true
+	return false	
+
+func can_run():
+	if is_attacking:
+		return false
 	if is_jumping:
-		new_state=State.JUMP
-	elif is_running:
-		new_state=State.RUN
-	elif is_walking:
-		new_state=State.WALK
-	else:
-		new_state=State.IDLE
-	if new_state!=current_state:
-		state_changed.emit(new_state,current_state)
-		current_state=new_state
-
-func take_damage(damage:float) -> float:
-	stats.take_damage(damage)
-	return damage
-
-func take_hit(weapon_data:WeaponData,attacker_position:Vector3) -> float:
-	#process other hit parameters
-	return take_damage(weapon_data.damage)
-
-
-func attack():
+		return false
+	if not is_moving:
+		return false
+	if is_blocking:
+		return false
+	return true
+			
+func can_attack():
+	if not weapon:
+		return false
+	if is_jumping:
+		return false
+	if weapon.can_attack():
+		return true
+	return false
+func can_aim():
+	if is_attacking:
+		return false
+	if is_jumping:
+		return false
+	if is_running:
+		return false
+	return true
+		
+func _physics_process(delta: float) -> void:
+	if is_knockingback:
+		knockback_timer-=delta
+		if knockback_timer<=0:
+			is_knockingback=false
+			return
+		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)	
+		move_and_slide()
+	if is_attacking:
+		if weapon:
+			if not weapon.is_active():
+				is_attacking=false
+		else:
+			is_attacking=false
+	if is_moving:
+		if not can_move():
+			is_moving=false
+			
+func _ready() -> void:
+	#var shape:CylinderShape3D=$Area3D/CollisionShape3D.shape
+	#shape.radius=detection_radius
 	if weapon:
-		if weapon.can_attack():
-			#print("DEBUG: attack")
-			is_attacking=true
-			weapon.attack()
+		set_current_weapon(weapon)
+	print("DEBUG: entity init")
+	
+func calculate_damage(damage:float,damage_type:String) -> float:
+	if is_blocking:
+		return damage/2.0
+	return damage
+	
+func take_hit(damage:float,damage_type:String,knockback_force:float,weapon_pos:Vector3):
+	var calculated_damage:float=calculate_damage(damage,damage_type)
+	print("DEBUG: taken hit ", damage_type," ",calculated_damage)
+	
+	hp-=calculated_damage
+	if hp<=0:
+		die()
+
 
 func die():
-	entity_died.emit(stats.data.entity_name,stats.data.entity_category)
+	print("DEBUG: I am dying!")
 	queue_free()
+	
+func attack():
+	if can_attack():
+		weapon.attack()
+		is_attacking=true
 
 
-func _on_stats_control_died() -> void:
-	die()
-	pass # Replace with function body.
 
-func update_animations():
-	var sm:AnimationNodeStateMachinePlayback=anim_state_machine_playback
+func is_entity(body:Node3D) -> bool:
+	if body==self:
+		return false
+	if "entity_type" in body:
+		return true
+	return false
+
+
+
+
+func play_animation():
+	pass	
+
+func update_animation():
+	if not animation_player:
+		return
+	if is_attacking:
+		if animation_player.current_animation!="melee_attack":
+			if animation_player.has_animation("melee_attack"):
+				animation_player.play("melee_attack")
+				
+		return
 	if is_jumping:
-		sm.travel("jump")
-	elif is_running:
-		sm.travel("run")
-	elif is_attacking:
-		sm.travel("attack")
-	elif is_walking:
-		sm.travel("walk")
+		if animation_player.current_animation!="jump":
+			if animation_player.has_animation("jump"):
+				animation_player.play("jump")
+				
+		return
+	if is_running:
+		if animation_player.current_animation=="run" and animation_player.is_playing():
+			return
+		if animation_player.has_animation("run"):
+			animation_player.play("run")
+		return
+	
+	if is_blocking:
+		if animation_player.has_animation("block"):
+			animation_player.play("block")	
+		return
 	else:
-		sm.travel("idle") 
-		
+		if animation_player.current_animation=="block":
+			animation_player.stop()
+	if is_moving:
+		if can_move():
+			if animation_player.has_animation("walk"):
+				animation_player.play("walk")
+		return
+	else:
+		if animation_player.current_animation=="walk":
+			animation_player.stop()
+	if not animation_player.is_playing():
+		if animation_player.has_animation("idle"):
+			animation_player.play("idle")
+	
+	
+
+func set_current_weapon(w:BaseWeapon):
+	if not w:
+		weapon=null
+		return
+	weapon=w
+	w.owner_body=self
+
+func regen_hp(delta:float):
+	hp+=regen_hp_per_second*delta

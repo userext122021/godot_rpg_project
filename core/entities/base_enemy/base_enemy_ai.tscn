@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cngbior8sf636"]
+[gd_scene load_steps=3 format=3 uid="uid://chstlgur6nlx7"]
 
-[ext_resource type="PackedScene" uid="uid://60uax6mdioib" path="res://core/entities/base_ai.tscn" id="1_85n83"]
-[ext_resource type="Script" uid="uid://bxbbaqd1w6w63" path="res://core/entities/base_enemy/base_enemy_ai.gd" id="2_mkdgg"]
+[ext_resource type="PackedScene" uid="uid://05p4s7eca1wb" path="res://core/entities/base_ai_entity/base_ai.tscn" id="1_53k37"]
+[ext_resource type="Script" uid="uid://da6dpqm72n4fn" path="res://core/entities/base_enemy/base_enemy_ai.gd" id="2_ucf7t"]
 
-[node name="BaseEnemyAI" instance=ExtResource("1_85n83")]
-script = ExtResource("2_mkdgg")
+[node name="BaseEnemyAI" instance=ExtResource("1_53k37")]
+script = ExtResource("2_ucf7t")
