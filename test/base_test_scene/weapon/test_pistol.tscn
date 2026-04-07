@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://dkj771scai1lw"]
+
+[ext_resource type="PackedScene" uid="uid://cf11hx406ss10" path="res://core/weapon/base_weapon.tscn" id="1_wr2vd"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3euh2"]
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_kplvf"]
+size = Vector3(0.14, 0.04, 0.1)
+
+[node name="TestPistol" instance=ExtResource("1_wr2vd")]
+knockback_force = 35.0
+preparing_interval = 0.1
+attacking_interval = 0.01
+cooldown_interval = 0.2
+
+[node name="RayCast3D" parent="." index="0"]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+target_position = Vector3(0, 0, -20)
+collision_mask = 4
+
+[node name="MeshInstance3D" parent="RayCast3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 8.742278e-09, 0, -0.29999995)
+mesh = SubResource("CylinderMesh_3euh2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RayCast3D/MeshInstance3D" index="0"]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, -1, -4.371139e-08, -4.371139e-08, -4.371139e-08, -4.371137e-08, 1, 8.742278e-09, -0.2, -0.023891205)
+mesh = SubResource("BoxMesh_kplvf")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="RayCast3D/MeshInstance3D" index="1"]
+transform = Transform3D(-1.0357429e-07, 1, 3.0934828e-09, 0.3695034, 3.539653e-08, 0.9292293, 0.9292293, 9.73873e-08, -0.3695034, 9.225939e-09, -0.21106488, -0.10529697)
+mesh = SubResource("BoxMesh_kplvf")

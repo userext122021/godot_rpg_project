@@ -39,5 +39,5 @@ func spawn():
 	
 func on_enemy_died():
 	if counter>0:
-		counter-=0
+		counter-=1
 		print("DEBUG: counter ",counter)

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://nai0s6voe2jj"]
+
+[ext_resource type="PackedScene" uid="uid://dyj5ecitscci1" path="res://core/pickable/base_pickable.tscn" id="1_k23vp"]
+
+[node name="TestPickable" instance=ExtResource("1_k23vp")]
+pickable_name = "test_pickable"
+
+[node name="Area3D" parent="." index="1"]
+collision_layer = 8
+collision_mask = 2

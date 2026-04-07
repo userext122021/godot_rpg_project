@@ -13,13 +13,29 @@ var is_cooldown:bool=false
 @export var preparing_interval:float=0.5
 @export var attacking_interval:float=0.5
 @export var cooldown_interval:float=0.5
-
 @export var is_ranged:bool=false
+@export var data:WeaponData
+@export var range:float=1.0
 
 var prep_timer:float=0
 var attack_timer:float=0
 var cooldown_timer:float=0
 var owner_body:BaseEntity
+
+
+func reload_data():
+	damage=data.damage
+	damage_type=data.damage_type
+	knockback_force=data.knockback_force
+	preparing_interval=data.preparing_interval
+	attacking_interval=data.attacking_interval
+	cooldown_interval=data.cooldown_interval
+	is_ranged=data.is_ranged
+	$RayCast3D.target_position.z=-data.range
+	
+func set_data(weapon_data:WeaponData):
+	data=weapon_data.duplicate()
+	reload_data()
 
 func try_to_hit(body:Node3D) -> bool:
 	if body:

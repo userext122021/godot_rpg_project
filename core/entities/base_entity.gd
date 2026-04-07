@@ -25,6 +25,9 @@ var is_moving:bool=false
 var is_jumping:bool=false
 var is_running:bool=false
 var is_blocking:bool=false
+var is_interacting:bool=false
+var interacting_body:Node3D
+var is_aiming:bool=false
 
 func knock_back(knockback_force:float,weapon_pos:Vector3):
 	print("DEBUG: knockback")
@@ -38,6 +41,8 @@ func knock_back(knockback_force:float,weapon_pos:Vector3):
 
 func can_move() -> bool:
 	if is_attacking:
+		return false
+	if is_blocking:
 		return false
 	return true
 func can_jump():
@@ -135,49 +140,49 @@ func is_entity(body:Node3D) -> bool:
 
 
 
-func play_animation():
-	pass	
+func play_animation(anim_name:String):
+	if animation_player.current_animation==anim_name and animation_player.is_playing():
+		return
+	if animation_player.has_animation(anim_name):
+		animation_player.play(anim_name)
+	
 
 func update_animation():
 	if not animation_player:
 		return
 	if is_attacking:
-		if animation_player.current_animation!="melee_attack":
-			if animation_player.has_animation("melee_attack"):
-				animation_player.play("melee_attack")
+		if weapon:
+			if not weapon.is_ranged:
+				play_animation("melee_attack")
 				
 		return
 	if is_jumping:
-		if animation_player.current_animation!="jump":
-			if animation_player.has_animation("jump"):
-				animation_player.play("jump")
-				
+		play_animation("jump")	
 		return
 	if is_running:
-		if animation_player.current_animation=="run" and animation_player.is_playing():
-			return
-		if animation_player.has_animation("run"):
-			animation_player.play("run")
+		play_animation("run")
 		return
 	
 	if is_blocking:
-		if animation_player.has_animation("block"):
-			animation_player.play("block")	
+		play_animation("block")	
 		return
 	else:
 		if animation_player.current_animation=="block":
 			animation_player.stop()
 	if is_moving:
 		if can_move():
-			if animation_player.has_animation("walk"):
-				animation_player.play("walk")
+			play_animation("walk")
 		return
 	else:
 		if animation_player.current_animation=="walk":
 			animation_player.stop()
+	if is_aiming:
+		play_animation("pistol_idle")
+	else:
+		if animation_player.current_animation=="pistol_idle":
+			animation_player.stop()
 	if not animation_player.is_playing():
-		if animation_player.has_animation("idle"):
-			animation_player.play("idle")
+		play_animation("idle")
 	
 	
 

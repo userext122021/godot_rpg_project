@@ -7,8 +7,18 @@
 [node name="BasePlayer" instance=ExtResource("1_svk8i")]
 script = ExtResource("2_m3cve")
 mouse_sensitivity = 0.002
+interact_check_interval = 0.5
 
 [node name="Camera3D" type="Camera3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 0.9659259, 0.25881907, 0, -0.25881907, 0.9659258, 0, 2.1000001, 1.4000001)
 
 [node name="Inventory" parent="." index="3" instance=ExtResource("3_x7wun")]
+
+[node name="InteractRayCast" type="RayCast3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.90000004, -1)
+target_position = Vector3(0, -0.2, -2)
+
+[node name="Label3D" type="Label3D" parent="InteractRayCast" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+text = "Text
+"
