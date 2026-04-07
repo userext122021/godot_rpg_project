@@ -38,6 +38,7 @@ func set_data(weapon_data:WeaponData):
 	reload_data()
 
 func try_to_hit(body:Node3D) -> bool:
+	#print("DEBUG: try to hit")
 	if body:
 		if owner_body:
 			if body==owner_body:
@@ -59,6 +60,7 @@ func _process(delta: float) -> void:
 	if is_attacking:
 		attack_timer-=delta
 		if $RayCast3D.is_colliding():
+			print("DEBUG: is colliding ",Time.get_ticks_msec())
 			if try_to_hit($RayCast3D.get_collider()):
 				is_attacking=false
 				is_cooldown=true

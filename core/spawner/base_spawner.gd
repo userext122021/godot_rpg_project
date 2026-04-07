@@ -31,7 +31,9 @@ func spawn():
 	if not obj:
 		return
 	add_child(obj)
-	obj.global_position=global_position
+	var pos=global_position
+	pos.y==0.5
+	obj.global_position=pos
 	obj.tree_exited.connect(on_object_destroy)
 	counter+=1
 	print("DEBUG: object spawned. counter = ",counter)

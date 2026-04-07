@@ -106,6 +106,7 @@ func _ready() -> void:
 	print("DEBUG: entity init")
 	
 func calculate_damage(damage:float,damage_type:String) -> float:
+	
 	if is_blocking:
 		return damage/2.0
 	return damage

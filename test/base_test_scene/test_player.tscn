@@ -10,7 +10,8 @@
 collision_layer = 2
 collision_mask = 7
 script = ExtResource("2_pw7be")
-max_hp = 100.0
+hp = 40.0
+max_hp = 40.0
 weapon = NodePath("base_character/Armature/Skeleton3D/mixamorig_RightHandIndex1/weapon_marker/MeleeWeapon")
 knockingback_interval = 0.4
 
