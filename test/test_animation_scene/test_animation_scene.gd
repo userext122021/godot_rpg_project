@@ -5,7 +5,7 @@ var counter:int=0
 @export var enemy_scene:PackedScene
 var timer:float=0
 var max_time:float=15
-@onready var player:BasePlayer=$BaseAnimatedPlayer
+@onready var player:BasePlayer=$TestPlayer
 
 func _ready() -> void:
 	player.tree_exited.connect(on_player_died)

@@ -1,0 +1,2 @@
+extends BaseAnimatedEnemy
+class_name TestEnemy

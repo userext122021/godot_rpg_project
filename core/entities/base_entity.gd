@@ -11,6 +11,8 @@ class_name BaseEntity
 @export var jump_velocity := 4.5
 @export var rotation_speed:float=3.0
 @export var hp:float=20
+@export var max_hp:float=20
+@export var regen_hp_per_second:float=1.0
 @export var weapon:BaseWeapon
 #@export var detection_radius:float=10.0
 @export var friction:float=100
@@ -185,3 +187,6 @@ func set_current_weapon(w:BaseWeapon):
 		return
 	weapon=w
 	w.owner_body=self
+
+func regen_hp(delta:float):
+	hp+=regen_hp_per_second*delta

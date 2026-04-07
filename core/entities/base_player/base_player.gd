@@ -4,6 +4,7 @@ class_name BasePlayer
 @export var mouse_sensitivity := 0.002
 
 @onready var camera = $Camera3D
+@onready var inventory:Inventory=$Inventory
 
 func _ready():
 	super._ready()
@@ -56,13 +57,13 @@ func _physics_process(delta):
 	else:
 		is_moving=false
 	
-	if not is_moving:	
+	if not is_moving:
 		velocity.x = move_toward(velocity.x, 0, friction*delta)
 		velocity.z = move_toward(velocity.z, 0, friction*delta)
 	
 	move_and_slide()
 	update_animation()
-	
+	regen_hp(delta)
 func die():
 	print("DEBUG: player is dying")
 	queue_free()
