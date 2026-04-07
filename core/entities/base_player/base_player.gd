@@ -65,3 +65,4 @@ func _physics_process(delta):
 	
 func die():
 	print("DEBUG: player is dying")
+	queue_free()

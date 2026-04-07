@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://br81vh3plelkt"]
+
+[ext_resource type="PackedScene" uid="uid://ojd7e3gdbl1f" path="res://core/entities/base_enemy/base_enemy.tscn" id="1_2wp1t"]
+[ext_resource type="Script" uid="uid://bh8vcnb0u55ap" path="res://core/entities/base_enemy/base_animated_enemy.gd" id="2_0v830"]
+[ext_resource type="PackedScene" uid="uid://c547i4svaflvj" path="res://assets/base_character/base_character.glb" id="2_tpv5b"]
+
+[node name="BaseAnimatedEnemy" node_paths=PackedStringArray("animation_player") instance=ExtResource("1_2wp1t")]
+collision_mask = 7
+script = ExtResource("2_0v830")
+animation_player = NodePath("base_character/AnimationPlayer")
+
+[node name="MeshInstance3D" parent="." index="1"]
+visible = false
+
+[node name="base_character" parent="." index="3" instance=ExtResource("2_tpv5b")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[editable path="base_character"]

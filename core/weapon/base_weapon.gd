@@ -8,7 +8,7 @@ var is_cooldown:bool=false
 
 @export var damage:float=7.0
 @export var damage_type:String="physical"
-@export var knockback_force:float=5.0
+@export var knockback_force:float=15.0
 
 @export var preparing_interval:float=0.5
 @export var attacking_interval:float=0.5

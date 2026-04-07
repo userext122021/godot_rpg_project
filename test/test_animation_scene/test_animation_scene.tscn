@@ -1,0 +1,133 @@
+[gd_scene load_steps=10 format=3 uid="uid://do0f58y8blt0p"]
+
+[ext_resource type="PackedScene" uid="uid://6hs4q7gqlkvo" path="res://test/base_test_scene/base_test_scene.tscn" id="1_f6vpg"]
+[ext_resource type="Script" uid="uid://f14gilwqkyy0" path="res://test/test_animation_scene/test_animation_scene.gd" id="2_wmu0b"]
+[ext_resource type="PackedScene" uid="uid://e44ntu6ugu38" path="res://core/entities/base_player/base_animated_player.tscn" id="2_yrhin"]
+[ext_resource type="PackedScene" uid="uid://cf11hx406ss10" path="res://core/weapon/base_weapon.tscn" id="3_wbqyu"]
+[ext_resource type="PackedScene" uid="uid://cayaf0kklgoai" path="res://test/test_animation_scene/enemy.tscn" id="3_wmu0b"]
+
+[sub_resource type="Gradient" id="Gradient_wmu0b"]
+offsets = PackedFloat32Array(0, 0.11486486, 0.21114865, 0.375, 1)
+colors = PackedColorArray(0.4525857, 0.4525857, 0.4525857, 1, 0.7235188, 0.7235188, 0.7235188, 1, 0.71311027, 0.71311027, 0.71311027, 1, 0.62612456, 0.62612456, 0.62612456, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uif1i"]
+frequency = 0.0276
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_47b23"]
+noise = SubResource("FastNoiseLite_uif1i")
+color_ramp = SubResource("Gradient_wmu0b")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lw8du"]
+albedo_color = Color(0.7204674, 0.7204675, 0.7204674, 1)
+albedo_texture = SubResource("NoiseTexture2D_47b23")
+texture_filter = 0
+
+[node name="TestAnimationScene" instance=ExtResource("1_f6vpg")]
+script = ExtResource("2_wmu0b")
+enemy_scene = ExtResource("3_wmu0b")
+
+[node name="MeshInstance3D" parent="Ground" index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_lw8du")
+
+[node name="BaseAnimatedPlayer" parent="." index="3" node_paths=PackedStringArray("weapon") instance=ExtResource("2_yrhin")]
+collision_layer = 2
+collision_mask = 7
+mouse_sensitivity = 0.002
+entity_type = "unknown"
+speed = 5.0
+walking_speed = 5.0
+running_speed = 15.0
+jump_velocity = 4.5
+rotation_speed = 3.0
+hp = 20.0
+weapon = NodePath("base_character/Armature/Skeleton3D/mixamorig_RightHandIndex1/weapon_marker/BaseWeapon")
+friction = 100.0
+knockingback_interval = 0.2
+
+[node name="Skeleton3D" parent="BaseAnimatedPlayer/base_character/Armature" index="0"]
+bones/0/position = Vector3(2.1193223, -1.6928909, -94.701126)
+bones/0/rotation = Quaternion(-0.6024668, -0.26686946, 0.3314511, 0.6752441)
+bones/1/position = Vector3(3.5762787e-07, 7.866893, -0.7244017)
+bones/1/rotation = Quaternion(0.049354274, 0.026669623, -0.013331742, 0.99833626)
+bones/2/position = Vector3(-6.589107e-07, 9.216893, -1.9799922e-06)
+bones/2/rotation = Quaternion(0.051304262, 0.053406127, -0.029988142, 0.99680316)
+bones/3/position = Vector3(-2.9802322e-07, 10.533492, 1.3113024e-06)
+bones/3/rotation = Quaternion(-0.05184936, 0.056225035, -0.024237163, 0.9967763)
+bones/4/position = Vector3(1.1920929e-06, 11.850198, 1.9907404e-06)
+bones/4/rotation = Quaternion(0.06569276, 0.0815937, 0.0030925565, 0.9944936)
+bones/5/rotation = Quaternion(-0.04159439, 0.19943745, -0.037356902, 0.9783144)
+bones/7/position = Vector3(7.2004, 9.197992, -0.25119996)
+bones/7/rotation = Quaternion(-0.6572468, -0.32230148, 0.52587163, -0.43313682)
+bones/8/position = Vector3(-2.3989935e-06, 15.086298, 1.4256321e-05)
+bones/8/rotation = Quaternion(0.21632078, -0.07535213, 0.016993681, 0.9732619)
+bones/9/position = Vector3(2.0506347e-07, 31.637112, -5.735216e-06)
+bones/9/rotation = Quaternion(0.10488355, -0.1590558, 0.23654045, 0.95275885)
+bones/10/position = Vector3(2.1800356e-06, 31.4241, 2.1063952e-06)
+bones/10/rotation = Quaternion(-0.05601367, 0.0028014656, 0.028142892, 0.9980294)
+bones/11/position = Vector3(-3.5664978, 0.78050166, 9.041811e-06)
+bones/11/rotation = Quaternion(0.06625938, 0.37897274, 0.10425027, 0.91712666)
+bones/12/position = Vector3(-1.2548934, 2.6374037, -6.8002864e-06)
+bones/12/rotation = Quaternion(0.08130031, -0.08387656, 0.18880336, 0.9750427)
+bones/13/position = Vector3(0.16870253, 3.3195064, 8.163991e-06)
+bones/13/rotation = Quaternion(0.03002529, -0.026049389, 0.15773018, 0.9866819)
+bones/14/position = Vector3(1.0862005, 1.8507998, -2.7418146e-06)
+bones/15/position = Vector3(2.1319054e-06, 3.5500026, -0.007994572)
+bones/15/rotation = Quaternion(0.0050449264, -0.007626952, 0.048308037, 0.9987907)
+bones/16/position = Vector3(-0.01929948, 5.672502, -2.4764272e-06)
+bones/16/rotation = Quaternion(0.04012464, 0.0012738202, 0.0016303413, 0.99919254)
+bones/17/position = Vector3(0.019903135, 4.5617013, -3.7433892e-06)
+bones/17/rotation = Quaternion(0.06606379, 0.0004350157, -0.0048168525, 0.99780375)
+bones/18/position = Vector3(-0.00060587004, 3.1573977, 2.029541e-06)
+bones/19/position = Vector3(-7.200394, 9.196695, -0.23739782)
+bones/19/rotation = Quaternion(0.6764827, -0.2789368, 0.48289824, 0.48101437)
+bones/20/position = Vector3(-5.1141825e-07, 15.086309, 1.0370377e-05)
+bones/20/rotation = Quaternion(0.25974402, 0.13598992, 0.28988475, 0.911047)
+bones/21/position = Vector3(-1.5479245e-07, 31.611696, 3.6474466e-07)
+bones/21/rotation = Quaternion(0.11788784, 0.09933813, -0.39093202, 0.90741754)
+bones/22/position = Vector3(1.6550756e-06, 31.376385, 3.7831987e-06)
+bones/22/rotation = Quaternion(0.089749455, -0.0005403276, -0.29828584, 0.9502476)
+bones/23/position = Vector3(3.5504076, 1.2562943, 4.0587265e-06)
+bones/23/rotation = Quaternion(0.027588062, -0.6184083, -0.22754243, 0.75168777)
+bones/24/position = Vector3(1.0612965, 2.8197954, 1.4777561e-07)
+bones/24/rotation = Quaternion(0.07106736, 0.08848803, -0.12843792, 0.985202)
+bones/25/position = Vector3(-0.23231165, 3.1790018, -4.9504542e-06)
+bones/25/rotation = Quaternion(0.11667451, 0.051023263, 0.12441284, 0.984025)
+bones/26/position = Vector3(-0.82900214, 1.9696963, 5.6624413e-06)
+bones/27/position = Vector3(5.2096425e-07, 4.0050917, -0.0038803061)
+bones/27/rotation = Quaternion(0.32065856, -0.07091849, -0.010498399, 0.9444779)
+bones/28/position = Vector3(0.023097, 5.576203, 7.96411e-06)
+bones/28/rotation = Quaternion(0.56479603, -0.026729874, 0.03439892, 0.82407993)
+bones/29/position = Vector3(-0.013394803, 4.521493, -5.4284924e-06)
+bones/29/rotation = Quaternion(0.51574045, -0.015777107, 0.0341292, 0.8559194)
+bones/30/position = Vector3(-0.009698242, 3.1917036, 4.367248e-07)
+bones/31/position = Vector3(9.913303, -4.3482046, 2.1803987)
+bones/31/rotation = Quaternion(0.3534985, 0.4282978, 0.800103, -0.22679317)
+bones/32/position = Vector3(-1.2631442e-06, 41.955605, 4.2706424e-06)
+bones/32/rotation = Quaternion(-0.39385685, 0.1713512, -0.049515948, 0.9017005)
+bones/33/position = Vector3(1.2997855e-06, 46.06831, -3.7223672e-06)
+bones/33/rotation = Quaternion(0.4514769, -0.0351189, -0.01263322, 0.891502)
+bones/34/position = Vector3(-2.5100271e-06, 20.828716, -4.1170924e-06)
+bones/34/rotation = Quaternion(0.30331606, -0.12014522, -0.0045546247, 0.9452745)
+bones/36/rotation = Quaternion(-0.045650396, 0.29530838, 0.9193343, 0.25599536)
+bones/37/position = Vector3(4.3762284e-06, 41.96052, -1.4226547e-06)
+bones/37/rotation = Quaternion(-0.4751097, -0.03305617, -0.03260586, 0.87870073)
+bones/38/position = Vector3(-3.131147e-06, 46.112206, -8.9281684e-08)
+bones/38/rotation = Quaternion(0.655601, 0.0614613, 0.13610609, 0.7401925)
+bones/39/position = Vector3(-1.6702943e-06, 21.01266, 3.5650828e-07)
+bones/39/rotation = Quaternion(0.28272507, 0.1491671, -0.01636644, 0.94739)
+
+[node name="mixamorig_RightHandIndex1" parent="BaseAnimatedPlayer/base_character/Armature/Skeleton3D" index="0"]
+transform = Transform3D(0.061996963, -0.06335586, 0.9960636, 0.5336259, 0.8454703, 0.020563513, -0.8434447, 0.53025043, 0.08622514, -52.390953, -17.064268, -74.53943)
+
+[node name="BaseWeapon" parent="BaseAnimatedPlayer/base_character/Armature/Skeleton3D/mixamorig_RightHandIndex1/weapon_marker" index="0" instance=ExtResource("3_wbqyu")]
+transform = Transform3D(-1, -3.733896e-08, 8.742278e-08, -3.7338975e-08, 1, -1.3411045e-07, -8.7422784e-08, -1.3411048e-07, -1, 0, 0, 0)
+preparing_interval = 0.58
+attacking_interval = 0.08
+cooldown_interval = 1.04
+
+[node name="RayCast3D" parent="BaseAnimatedPlayer/base_character/Armature/Skeleton3D/mixamorig_RightHandIndex1/weapon_marker/BaseWeapon" index="0"]
+collision_mask = 4
+
+[editable path="BaseAnimatedPlayer"]
+[editable path="BaseAnimatedPlayer/base_character"]
+[editable path="BaseAnimatedPlayer/base_character/Armature/Skeleton3D/mixamorig_RightHandIndex1/weapon_marker/BaseWeapon"]

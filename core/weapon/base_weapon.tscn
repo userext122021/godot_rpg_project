@@ -2,15 +2,17 @@
 
 [ext_resource type="Script" uid="uid://olrxhfdmqy3f" path="res://core/weapon/base_weapon.gd" id="1_a0172"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_l3xq3"]
-size = Vector3(0.2, 0.2, 0.2)
+[sub_resource type="CylinderMesh" id="CylinderMesh_a0172"]
+top_radius = 0.03
+bottom_radius = 0.02
+height = 1.0
 
 [node name="BaseWeapon" type="Node3D"]
 script = ExtResource("1_a0172")
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
-target_position = Vector3(0, -0.1, -2)
+target_position = Vector3(0, 0, -1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RayCast3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, -1.9)
-mesh = SubResource("BoxMesh_l3xq3")
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.49999994)
+mesh = SubResource("CylinderMesh_a0172")

@@ -28,20 +28,28 @@ func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	if is_knockingback:
 		return
-	
+	if not is_on_floor():
+		velocity.y += get_gravity().y * delta
+		
 	if ai.is_move_to_target:
 		if global_position.distance_to(ai.target)<ai.minimal_distance:
 			ai.is_target_reached=true
+			is_moving=false
 		else:	
 			rotate_to_target(delta)
 			#print("DEBUG: angle ",180.0*angle/PI)
 			velocity.x=-basis.z.x*speed
 			velocity.z=-basis.z.z*speed
+			is_moving=true
+	else:
+		is_moving=false
+	if is_attacking:
+		rotate_to_target(delta)
 	
-	if weapon:
-		if weapon.is_active():
-			rotate_to_target(delta)
-	velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
+	if not is_moving:		
+		var vy=velocity.y
+		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)
+		velocity.y=vy
 	move_and_slide()
 
 

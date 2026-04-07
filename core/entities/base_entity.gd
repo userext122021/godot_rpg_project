@@ -98,10 +98,16 @@ func _ready() -> void:
 		set_current_weapon(weapon)
 	print("DEBUG: entity init")
 	
+func calculate_damage(damage:float,damage_type:String) -> float:
+	if is_blocking:
+		return damage/2.0
+	return damage
 	
 func take_hit(damage:float,damage_type:String,knockback_force:float,weapon_pos:Vector3):
-	print("DEBUG: taken hit ", damage_type," ",damage)
-	hp-=damage
+	var calculated_damage:float=calculate_damage(damage,damage_type)
+	print("DEBUG: taken hit ", damage_type," ",calculated_damage)
+	
+	hp-=calculated_damage
 	if hp<=0:
 		die()
 
@@ -153,18 +159,20 @@ func update_animation():
 		return
 	
 	if is_blocking:
-		if is_moving:
-			if animation_player.has_animation("pistol_walk"):
-				animation_player.play("pistol_walk")
-		else:
-			if animation_player.has_animation("pistol_idle"):
-				animation_player.play("pistol_idle")
+		if animation_player.has_animation("block"):
+			animation_player.play("block")	
 		return
+	else:
+		if animation_player.current_animation=="block":
+			animation_player.stop()
 	if is_moving:
 		if can_move():
 			if animation_player.has_animation("walk"):
 				animation_player.play("walk")
 		return
+	else:
+		if animation_player.current_animation=="walk":
+			animation_player.stop()
 	if not animation_player.is_playing():
 		if animation_player.has_animation("idle"):
 			animation_player.play("idle")
