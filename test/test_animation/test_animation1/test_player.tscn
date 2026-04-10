@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://dej2fjyjt23vf"]
+
+[ext_resource type="PackedScene" uid="uid://nfkq1v6rhxve" path="res://core/entities/base_player/base_player.tscn" id="1_j77vh"]
+[ext_resource type="PackedScene" uid="uid://barmdy82y6gha" path="res://test/test_animation/test_animation1/base_human_animated.glb" id="2_ei7nx"]
+[ext_resource type="Script" uid="uid://bjamuy0kh3uc" path="res://test/test_animation/test_animation1/test_player.gd" id="2_l8m3r"]
+[ext_resource type="PackedScene" uid="uid://dkj771scai1lw" path="res://test/base_test_scene/weapon/test_pistol.tscn" id="4_4ksol"]
+
+[node name="TestPlayer" node_paths=PackedStringArray("weapon", "animation_player") instance=ExtResource("1_j77vh")]
+script = ExtResource("2_l8m3r")
+weapon = NodePath("base_human_animated/Armature/Skeleton3D/hand_r/weapon_marker/TestPistol")
+animation_player = NodePath("base_human_animated/AnimationPlayer")
+
+[node name="MeshInstance3D" parent="." index="1"]
+visible = false
+
+[node name="base_human_animated" parent="." index="5" instance=ExtResource("2_ei7nx")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="TestPistol" parent="base_human_animated/Armature/Skeleton3D/hand_r/weapon_marker" index="0" instance=ExtResource("4_4ksol")]
+transform = Transform3D(-1.6117967e-07, -9.4873336e-08, -1, -1, 1.5372906e-07, 1.6117966e-07, 1.5372902e-07, 1, -9.487335e-08, 0.030462861, 0.03719318, 0.10000002)
+
+[editable path="base_human_animated"]

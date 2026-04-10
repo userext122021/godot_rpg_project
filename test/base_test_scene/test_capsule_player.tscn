@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://7dnsn55do1h5"]
+
+[ext_resource type="PackedScene" uid="uid://nfkq1v6rhxve" path="res://core/entities/base_player/base_player.tscn" id="1_h28jx"]
+
+[node name="TestCapsulePlayer" instance=ExtResource("1_h28jx")]
+entity_type = "player"

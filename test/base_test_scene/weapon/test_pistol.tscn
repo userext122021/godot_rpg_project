@@ -15,6 +15,7 @@ knockback_force = 35.0
 preparing_interval = 0.1
 attacking_interval = 0.01
 cooldown_interval = 0.2
+is_ranged = true
 
 [node name="RayCast3D" parent="." index="0"]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)

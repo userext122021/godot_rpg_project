@@ -155,7 +155,8 @@ func update_animation():
 		if weapon:
 			if not weapon.is_ranged:
 				play_animation("melee_attack")
-				
+			else:
+				play_animation("shoot")	
 		return
 	if is_jumping:
 		play_animation("jump")	
