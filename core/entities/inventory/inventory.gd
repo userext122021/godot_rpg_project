@@ -84,3 +84,14 @@ func is_item_usable(item_name:String) -> bool:
 	if not d:
 		return false
 	return d.is_usable
+
+func get_node_by_item_name(item_name:String) -> Node3D:
+	if not has_item(item_name):
+		return null
+	var d:PickableData=get_item_data(item_name)
+	if not d:
+		return null
+	if not d.scene:
+		return null
+	return d.scene.instantiate()
+	

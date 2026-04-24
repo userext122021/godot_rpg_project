@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://due16jv3sattp"]
+
+[ext_resource type="PackedScene" uid="uid://dyj5ecitscci1" path="res://core/pickable/base_pickable.tscn" id="1_ul4j0"]
+[ext_resource type="PackedScene" uid="uid://ckm3nvfw4wjko" path="res://test/test_minimal_rpg/test_club.tscn" id="2_slher"]
+[ext_resource type="Script" uid="uid://blap7mvsuddfp" path="res://core/pickable/pickable_data.gd" id="3_gfaeo"]
+
+[sub_resource type="Resource" id="Resource_ttvxm"]
+script = ExtResource("3_gfaeo")
+pickable_name = "test_club"
+pickable_category = "weapon"
+scene = ExtResource("2_slher")
+metadata/_custom_type_script = "uid://blap7mvsuddfp"
+
+[node name="TestPickableWeapon" instance=ExtResource("1_ul4j0")]
+pickable_name = "test_club"
+pickable_category = "weapon"
+data = SubResource("Resource_ttvxm")
+
+[node name="MeshInstance3D" parent="." index="0"]
+visible = false
+
+[node name="TestClub" parent="." index="2" instance=ExtResource("2_slher")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.5)

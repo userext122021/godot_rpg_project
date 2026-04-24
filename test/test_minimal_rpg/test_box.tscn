@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://di1mvcysmphut"]
+
+[ext_resource type="PackedScene" uid="uid://chwmg3fbdtf16" path="res://core/props/base_static_prop.tscn" id="1_6wif8"]
+
+[node name="TestBox" instance=ExtResource("1_6wif8")]

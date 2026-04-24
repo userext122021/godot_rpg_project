@@ -16,6 +16,8 @@ var is_cooldown:bool=false
 @export var is_ranged:bool=false
 @export var data:WeaponData
 @export var range:float=1.0
+@export var start_position:Vector3
+@export var start_rotation:Vector3
 
 var prep_timer:float=0
 var attack_timer:float=0
@@ -60,7 +62,7 @@ func _process(delta: float) -> void:
 	if is_attacking:
 		attack_timer-=delta
 		if $RayCast3D.is_colliding():
-			print("DEBUG: is colliding ",Time.get_ticks_msec())
+			#print("DEBUG: is colliding ",Time.get_ticks_msec())
 			if try_to_hit($RayCast3D.get_collider()):
 				is_attacking=false
 				is_cooldown=true

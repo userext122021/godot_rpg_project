@@ -45,10 +45,12 @@ func _physics_process(delta):
 	else:
 		is_running=false	
 		speed=walking_speed
-		
+	if Input.is_action_just_pressed("inventory"):
+		show_inventory()
+			
 	if Input.is_action_pressed("block"):
-		if weapon:
-			if weapon.is_ranged:
+		if current_weapon:
+			if current_weapon.is_ranged:
 				is_aiming=true
 			else:
 				is_blocking=true
@@ -108,3 +110,25 @@ func interact():
 	i.interact(self)
 	is_interacting=true
 	pass
+
+func show_inventory():
+	print($Inventory.items)
+
+func equip_item(item_name:String):
+	var obj=inventory.get_node_by_item_name(item_name)
+	if not obj:
+		return
+	var d:PickableData=inventory.get_item_data(item_name)
+	if not d:
+		return
+	if d.pickable_category=="weapon":
+		equip_weapon_item(d)
+	
+func equip_weapon_item(weapon_item_data:PickableData):
+	if not weapon_item_data.scene:
+		return
+	if current_weapon:
+		current_weapon.queue_free()
+	var w:BaseWeapon=weapon_item_data.scene.instantiate()
+	set_current_weapon(w)
+	print("DEUG: equip weapon data ",weapon_item_data.pickable_name)

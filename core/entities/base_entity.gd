@@ -13,11 +13,14 @@ class_name BaseEntity
 @export var hp:float=20
 @export var max_hp:float=20
 @export var regen_hp_per_second:float=1.0
-@export var weapon:BaseWeapon
+@export var current_weapon:BaseWeapon
 #@export var detection_radius:float=10.0
 @export var friction:float=100
 @export var knockingback_interval:float=0.2
 @export var animation_player:AnimationPlayer
+@export var weapon_marker:Node3D
+@export var mass:float=60
+
 var is_knockingback:bool=false
 var knockback_timer:float=0
 var is_attacking:bool=false
@@ -34,8 +37,8 @@ func knock_back(knockback_force:float,weapon_pos:Vector3):
 	var dir:Vector3=global_position.direction_to(weapon_pos)
 	var angle=atan2(dir.z,dir.x)+PI/2.0
 	dir.y=0
-	velocity.x=-dir.x*knockback_force
-	velocity.z=-dir.z*knockback_force
+	velocity.x=-dir.x*knockback_force/mass
+	velocity.z=-dir.z*knockback_force/mass
 	is_knockingback=true
 	knockback_timer=knockingback_interval
 
@@ -64,11 +67,11 @@ func can_run():
 	return true
 			
 func can_attack():
-	if not weapon:
+	if not current_weapon:
 		return false
 	if is_jumping:
 		return false
-	if weapon.can_attack():
+	if current_weapon.can_attack():
 		return true
 	return false
 func can_aim():
@@ -89,8 +92,8 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector3.ZERO, friction * delta)	
 		move_and_slide()
 	if is_attacking:
-		if weapon:
-			if not weapon.is_active():
+		if current_weapon:
+			if not current_weapon.is_active():
 				is_attacking=false
 		else:
 			is_attacking=false
@@ -101,8 +104,8 @@ func _physics_process(delta: float) -> void:
 func _ready() -> void:
 	#var shape:CylinderShape3D=$Area3D/CollisionShape3D.shape
 	#shape.radius=detection_radius
-	if weapon:
-		set_current_weapon(weapon)
+	if current_weapon:
+		set_current_weapon(current_weapon)
 	print("DEBUG: entity init")
 	
 func calculate_damage(damage:float,damage_type:String) -> float:
@@ -126,7 +129,7 @@ func die():
 	
 func attack():
 	if can_attack():
-		weapon.attack()
+		current_weapon.attack()
 		is_attacking=true
 
 
@@ -152,8 +155,8 @@ func update_animation():
 	if not animation_player:
 		return
 	if is_attacking:
-		if weapon:
-			if not weapon.is_ranged:
+		if current_weapon:
+			if not current_weapon.is_ranged:
 				play_animation("melee_attack")
 			else:
 				play_animation("shoot")	
@@ -190,10 +193,24 @@ func update_animation():
 
 func set_current_weapon(w:BaseWeapon):
 	if not w:
-		weapon=null
+		current_weapon=null
 		return
-	weapon=w
-	w.owner_body=self
-
+	current_weapon=w
+	current_weapon.owner_body=self
+	if weapon_marker:
+		weapon_marker.add_child(current_weapon)
+	else:
+		add_child(current_weapon)
+	current_weapon.position=current_weapon.start_position
+	current_weapon.rotation=PI*current_weapon.start_rotation/180.0
+	print("DEBUG: weapon_position ",current_weapon.position)
+	print("DEBUG: weapon_rotation ",current_weapon.rotation)
+		
 func regen_hp(delta:float):
 	hp+=regen_hp_per_second*delta
+
+func equip_item(item_name:String):
+	pass
+
+func equip_weapon_item(weapon_item_data:PickableData):
+	pass

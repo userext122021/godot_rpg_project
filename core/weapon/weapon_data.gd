@@ -10,3 +10,5 @@ class_name WeaponData
 @export var attacking_interval:float=0.5
 @export var cooldown_interval:float=0.5
 @export var range:float=1.0
+@export var start_position:Vector3
+@export var start_rotation:Vector3

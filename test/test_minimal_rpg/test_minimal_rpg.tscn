@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddiovva0jgiuw"]
+
+[ext_resource type="PackedScene" uid="uid://6hs4q7gqlkvo" path="res://test/base_test_scene/base_test_scene.tscn" id="1_g06he"]
+[ext_resource type="PackedScene" uid="uid://jn2q226dfcee" path="res://test/test_minimal_rpg/test_player.tscn" id="2_u6f5l"]
+[ext_resource type="PackedScene" uid="uid://due16jv3sattp" path="res://test/test_minimal_rpg/test_pickable_weapon.tscn" id="3_3i4j4"]
+[ext_resource type="PackedScene" uid="uid://di1mvcysmphut" path="res://test/test_minimal_rpg/test_box.tscn" id="4_hcvv5"]
+
+[node name="TestMinimalRpg" instance=ExtResource("1_g06he")]
+
+[node name="TestPlayer" parent="." index="3" instance=ExtResource("2_u6f5l")]
+
+[node name="TestPickableWeapon" parent="." index="4" instance=ExtResource("3_3i4j4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="TestBox" parent="." index="5" instance=ExtResource("4_hcvv5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)

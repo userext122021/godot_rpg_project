@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://dvvaed3c54v03"]
 
-[ext_resource type="PackedScene" uid="uid://bquw73h6yl6c2" path="res://test/test_animation/test_animation1/test_animation_1.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://ddiovva0jgiuw" path="res://test/test_minimal_rpg/test_minimal_rpg.tscn" id="1_ig7tw"]
 
 [node name="Main" type="Node"]
 
-[node name="TestAnimation1" parent="." instance=ExtResource("1_ig7tw")]
+[node name="TestMinimalRpg" parent="." instance=ExtResource("1_ig7tw")]
