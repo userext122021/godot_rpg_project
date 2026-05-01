@@ -13,7 +13,7 @@ class_name BaseEntity
 @export var hp:float=20
 @export var max_hp:float=20
 @export var regen_hp_per_second:float=1.0
-@export var current_weapon:BaseWeapon
+@export var default_weapon:BaseWeapon
 #@export var detection_radius:float=10.0
 @export var friction:float=100
 @export var knockingback_interval:float=0.2
@@ -21,6 +21,7 @@ class_name BaseEntity
 @export var weapon_marker:Node3D
 @export var mass:float=60
 
+var current_weapon:BaseWeapon
 var is_knockingback:bool=false
 var knockback_timer:float=0
 var is_attacking:bool=false
@@ -104,8 +105,9 @@ func _physics_process(delta: float) -> void:
 func _ready() -> void:
 	#var shape:CylinderShape3D=$Area3D/CollisionShape3D.shape
 	#shape.radius=detection_radius
-	if current_weapon:
-		set_current_weapon(current_weapon)
+	if default_weapon:
+		#set_current_weapon(default_weapon)
+		current_weapon=default_weapon
 	print("DEBUG: entity init")
 	
 func calculate_damage(damage:float,damage_type:String) -> float:
@@ -197,6 +199,9 @@ func set_current_weapon(w:BaseWeapon):
 		return
 	current_weapon=w
 	current_weapon.owner_body=self
+	if current_weapon.get_parent():
+		current_weapon.get_parent().remove_child(current_weapon)
+	
 	if weapon_marker:
 		weapon_marker.add_child(current_weapon)
 	else:
