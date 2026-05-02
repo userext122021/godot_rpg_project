@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://befstc37pttav"]
-
-[ext_resource type="PackedScene" uid="uid://dsxs2cqbrc6me" path="res://test/base_test_scene/weapon/test_club.tscn" id="1_leyyc"]
-
-[node name="TestMeleeWeapon" instance=ExtResource("1_leyyc")]
-preparing_interval = 0.36
-attacking_interval = 0.14
-cooldown_interval = 0.3

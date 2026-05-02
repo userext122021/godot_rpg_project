@@ -12,3 +12,4 @@ class_name WeaponData
 @export var range:float=1.0
 @export var start_position:Vector3
 @export var start_rotation:Vector3
+@export var attack_cost:float=0.0

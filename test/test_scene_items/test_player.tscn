@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1lei24df2438"]
+
+[ext_resource type="PackedScene" uid="uid://nfkq1v6rhxve" path="res://core/entities/base_player/base_player.tscn" id="1_11qj4"]
+[ext_resource type="PackedScene" uid="uid://cbdnrebmqak8t" path="res://core/ui/ui.tscn" id="2_l1svv"]
+
+[node name="BasePlayer" instance=ExtResource("1_11qj4")]
+
+[node name="Ui" parent="." index="6" node_paths=PackedStringArray("player_body") instance=ExtResource("2_l1svv")]
+player_body = NodePath("..")

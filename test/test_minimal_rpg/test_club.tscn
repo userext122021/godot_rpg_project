@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckm3nvfw4wjko"]
-
-[ext_resource type="PackedScene" uid="uid://cf11hx406ss10" path="res://core/weapon/base_weapon.tscn" id="1_vvx2p"]
-
-[node name="TestClub" instance=ExtResource("1_vvx2p")]
-start_rotation = Vector3(0, -180, 0)

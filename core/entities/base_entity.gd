@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name BaseEntity
 
-
+@onready var inventory:Inventory=$Inventory
 
 @export var entity_type:String="unknown"
 @export var speed := 5.0
@@ -13,6 +13,10 @@ class_name BaseEntity
 @export var hp:float=20
 @export var max_hp:float=20
 @export var regen_hp_per_second:float=1.0
+@export var stamina:float=20
+@export var max_stamina:float=20
+@export var regen_stamina_per_second:float=1.0
+
 @export var default_weapon:BaseWeapon
 #@export var detection_radius:float=10.0
 @export var friction:float=100
@@ -20,6 +24,8 @@ class_name BaseEntity
 @export var animation_player:AnimationPlayer
 @export var weapon_marker:Node3D
 @export var mass:float=60
+@export var jump_cost:float=4.0
+@export var running_cost_per_second:float=3.0
 
 var current_weapon:BaseWeapon
 var is_knockingback:bool=false
@@ -50,13 +56,17 @@ func can_move() -> bool:
 		return false
 	return true
 func can_jump():
+	if stamina<jump_cost:
+		return false
 	if is_attacking:
 		return false
 	if is_on_floor():
 		return true
 	return false	
 
-func can_run():
+func can_run(delta:float):
+	if stamina<=running_cost_per_second*delta:
+		return false
 	if is_attacking:
 		return false
 	if is_jumping:
@@ -71,6 +81,8 @@ func can_attack():
 	if not current_weapon:
 		return false
 	if is_jumping:
+		return false
+	if current_weapon.data.attack_cost>stamina:
 		return false
 	if current_weapon.can_attack():
 		return true
@@ -111,7 +123,6 @@ func _ready() -> void:
 	print("DEBUG: entity init")
 	
 func calculate_damage(damage:float,damage_type:String) -> float:
-	
 	if is_blocking:
 		return damage/2.0
 	return damage
@@ -123,6 +134,9 @@ func take_hit(damage:float,damage_type:String,knockback_force:float,weapon_pos:V
 	hp-=calculated_damage
 	if hp<=0:
 		die()
+	if knockback_force and not is_knockingback:
+		knock_back(knockback_force,weapon_pos)
+		
 
 
 func die():
@@ -193,10 +207,14 @@ func update_animation():
 	
 	
 
-func set_current_weapon(w:BaseWeapon):
+func set_current_weapon(w:BaseWeapon) -> bool:
+	if w==current_weapon:
+		return false
 	if not w:
 		current_weapon=null
-		return
+		return false
+	if current_weapon:
+		current_weapon.queue_free()
 	current_weapon=w
 	current_weapon.owner_body=self
 	if current_weapon.get_parent():
@@ -210,15 +228,64 @@ func set_current_weapon(w:BaseWeapon):
 	current_weapon.rotation=PI*current_weapon.start_rotation/180.0
 	print("DEBUG: weapon_position ",current_weapon.position)
 	print("DEBUG: weapon_rotation ",current_weapon.rotation)
+	return true
 		
 func regen_hp(delta:float):
 	hp+=regen_hp_per_second*delta
+func  regen_stamina(delta:float):
+	stamina+=regen_stamina_per_second*delta
 
-func equip_item(item_name:String):
-	pass
+func spend_stamina(delta:float):
+	if is_running and stamina>running_cost_per_second*delta:
+		stamina-=running_cost_per_second*delta
 
-func equip_weapon_item(weapon_item_data:PickableData):
-	pass
+			
+func equip_item_by_name(item_name:String) -> bool:
+	var d:PickableData=inventory.get_item_data(item_name)
+	if not d:
+		return false
+	return equip_item_by_data(d)
 
-func take_item(item_name:String,item_data:PickableData,amount:float):
-	pass
+func equip_item(item_body:Node3D) -> bool:
+	if not item_body:
+		return false
+	item_body.queue_free()
+	print("STUB: equip_item need to be replaced")
+	return false
+	
+func equip_item_by_data(item_data:PickableData) -> bool:
+	if not item_data:
+		return false
+	if not item_data.scene:
+		return false
+	
+	if item_data.pickable_category=="weapon":
+		var w:BaseWeapon=item_data.scene.instantiate()
+		if not w is BaseWeapon:
+			w.queue_free()
+			return false
+		return set_current_weapon(w)
+		
+	if not item_data.is_equipable:
+		return false
+	var item_body:Node3D=item_data.scene.instantiate()
+	return equip_item(item_body)
+	
+
+func take_item_by_name(item_name:String,amount:float=1.0) -> bool:
+	if not inventory.get_item_data(item_name):
+		print("WARNING: there is no item data of ",item_name)
+	inventory.add_item(item_name,amount)
+	return true
+
+func take_item_by_data(item_data:PickableData,amount:float=1.0) -> bool:
+	if not item_data:
+		return false
+	if amount<=0:
+		return false
+		
+	var item_name:String=item_data.pickable_name
+	if not inventory	.get_item_data(item_name):
+		inventory.add_item_data(item_data)
+	inventory.add_item(item_name,amount)
+	return true

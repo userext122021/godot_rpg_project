@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://c36ktyj6wjll"]
-
-[ext_resource type="PackedScene" uid="uid://6hs4q7gqlkvo" path="res://test/base_test_scene/base_test_scene.tscn" id="1_r7qtk"]
-[ext_resource type="PackedScene" uid="uid://7dnsn55do1h5" path="res://test/base_test_scene/test_capsule_player.tscn" id="2_ld8i6"]
-
-[node name="TestScene" instance=ExtResource("1_r7qtk")]
-
-[node name="TestCapsulePlayer" parent="." index="3" instance=ExtResource("2_ld8i6")]

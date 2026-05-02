@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://dvvaed3c54v03"]
 
-[ext_resource type="PackedScene" uid="uid://cpu814du2qtm2" path="res://test/test_animation/test_animation2/test_animation_2.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://bac88smxernji" path="res://test/test_scene_items/test_scene_items.tscn" id="1_ig7tw"]
 
 [node name="Main" type="Node"]
 
-[node name="TestAnimation2" parent="." instance=ExtResource("1_ig7tw")]
+[node name="BaseTestScene" parent="." instance=ExtResource("1_ig7tw")]

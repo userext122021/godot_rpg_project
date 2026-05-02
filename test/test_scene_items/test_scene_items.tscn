@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bac88smxernji"]
+
+[ext_resource type="PackedScene" uid="uid://6hs4q7gqlkvo" path="res://test/base_test_scene/base_test_scene.tscn" id="1_tyj58"]
+[ext_resource type="PackedScene" uid="uid://d1lei24df2438" path="res://test/test_scene_items/test_player.tscn" id="2_m85qb"]
+
+[node name="TestSceneItems" instance=ExtResource("1_tyj58")]
+
+[node name="BasePlayer" parent="." index="3" instance=ExtResource("2_m85qb")]

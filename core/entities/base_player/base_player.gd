@@ -5,13 +5,14 @@ class_name BasePlayer
 @export var interact_check_interval:float=0.5
 
 @onready var camera = $Camera3D
-@onready var inventory:Inventory=$Inventory
+
 var interact_check_timer:float=0
 
 func _ready():
 	super._ready()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Прячем курсор
 	entity_type="player"
+	stamina=max_stamina/2.0
 
 func _unhandled_input(event):
 	if Input.is_action_pressed("ui_cancel"):
@@ -36,12 +37,16 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		if can_jump():
+			stamina-=jump_cost
 			velocity.y = jump_velocity
 			is_jumping=true
 	if Input.is_action_pressed("run"):
-		if can_run():
+		if can_run(delta):
 			is_running=true
 			speed=running_speed
+		else:
+			is_running=false
+			speed=walking_speed
 	else:
 		is_running=false	
 		speed=walking_speed
@@ -81,7 +86,10 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	update_animation()
+	spend_stamina(delta)
 	regen_hp(delta)
+	regen_stamina(delta)
+	
 func die():
 	print("DEBUG: player is dying")
 	queue_free()
@@ -113,25 +121,3 @@ func interact():
 
 func show_inventory():
 	print($Inventory.items)
-
-func equip_item(item_name:String):
-	var obj=inventory.get_node_by_item_name(item_name)
-	if not obj:
-		return
-	var d:PickableData=inventory.get_item_data(item_name)
-	if not d:
-		return
-	if d.pickable_category=="weapon":
-		equip_weapon_item(d)
-	
-func equip_weapon_item(weapon_item_data:PickableData):
-	if not weapon_item_data.scene:
-		return
-	if current_weapon:
-		current_weapon.queue_free()
-	var w:BaseWeapon=weapon_item_data.scene.instantiate()
-	set_current_weapon(w)
-	print("DEUG: equip weapon data ",weapon_item_data.pickable_name)
-
-func take_item(item_name:String,item_data:PickableData,amount:float):
-	pass
