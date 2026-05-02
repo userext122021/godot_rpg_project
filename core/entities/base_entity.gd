@@ -219,3 +219,6 @@ func equip_item(item_name:String):
 
 func equip_weapon_item(weapon_item_data:PickableData):
 	pass
+
+func take_item(item_name:String,item_data:PickableData,amount:float):
+	pass
