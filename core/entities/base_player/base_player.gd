@@ -132,3 +132,6 @@ func equip_weapon_item(weapon_item_data:PickableData):
 	var w:BaseWeapon=weapon_item_data.scene.instantiate()
 	set_current_weapon(w)
 	print("DEUG: equip weapon data ",weapon_item_data.pickable_name)
+
+func take_item(item_name:String,item_data:PickableData,amount:float):
+	pass
