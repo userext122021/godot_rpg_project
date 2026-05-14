@@ -86,6 +86,9 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	update_animation()
+	process_stats(delta)
+
+func process_stats(delta:float):
 	spend_stamina(delta)
 	regen_hp(delta)
 	regen_stamina(delta)
